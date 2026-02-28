@@ -1,0 +1,535 @@
+.hero {
+    margin-top: 80px;
+    padding: 60px 0px;
+    background: linear-gradient(90deg, #292966, #5C5C99);
+    color: white;
+    border-bottom-left-radius: 32px;
+    border-bottom-right-radius: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.left {
+    max-width: 800px;
+    text-align: left;
+}
+
+.title {
+    margin-top: 0;
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.title span {
+    color: #CCCCFF;
+}
+
+.subtitle {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #e0e0ff;
+    margin-bottom: 30px;
+}
+
+.buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.primaryBtn {
+    background: #CCCCFF;
+    color: #292966;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+.primaryBtn:hover {
+    background: #b3b3ff;
+}
+
+.secondaryBtn {
+    background: transparent;
+    color: white;
+    border: 2px solid #CCCCFF;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.secondaryBtn:hover {
+    background: #CCCCFF;
+    color: #292966;
+}
+
+.story {
+    margin: 0;
+    padding: 60px 40px;
+    background: #f9f9ff;
+    text-align: center;
+}
+
+.heading {
+    font-size: 32px;
+    font-weight: 800;
+    color: #292966;
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.heading::after {
+    content: '';
+    width: 50px;
+    height: 3px;
+    background-color: #5C5C99;
+    display: block;
+    margin: 8px auto 0;
+    border-radius: 10px;
+}
+
+.subtext {
+    font-size: 16px;
+    color: #5c5c99;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.contentRow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    text-align: left;
+}
+
+.imageWrapper {
+    flex: 1;
+    min-width: 300px;
+    max-width: 570px;
+}
+
+.image {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.textWrapper {
+    flex: 1;
+    min-width: 300px;
+    max-width: 600px;
+}
+
+.textWrapper h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #292966;
+    margin-bottom: 14px;
+}
+
+.textWrapper p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 16px;
+}
+
+.timeline {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.year {
+    background: #CCCCFF;
+    color: #292966;
+    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 50px;
+    font-size: 16px;
+}
+
+.event {
+    font-size: 16px;
+    color: #5C5C99;
+}
+
+.Wrapper {
+    margin: 0;
+}
+
+.missionSection {
+    background-color: #f8f8ff;
+    padding: 60px 40px;
+    text-align: center;
+}
+
+.heading {
+    font-size: 32px;
+    font-weight: 800;
+    color: #292966;
+    margin-bottom: 8px;
+}
+
+.subheading {
+    font-size: 16px;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    color: #5c5c99;
+    line-height: 1.6;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 28px 24px;
+    max-width: 340px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.iconWrapper {
+    background: #ccccff;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    font-size: 29px;
+    color: #292966;
+}
+
+.card h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #292966;
+}
+
+.card p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.5;
+}
+
+.contactSection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-between;
+    padding: 40px 20px;
+    background: #f6f6ff;
+    border-radius: 16px;
+}
+
+.Mleft {
+    flex: 1;
+    min-width: 280px;
+}
+
+.Mright {
+    flex: 1;
+    background-color: #f4f3ff;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    min-width: 280px;
+}
+
+.Mheading {
+    font-size: 28px;
+    font-weight: 700;
+    color: #292966;
+    margin-bottom: 8px;
+}
+
+.subtext {
+    margin-bottom: 24px;
+    color: #444;
+}
+
+.infoItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.iconCircle {
+    background: #cccaff;
+    color: #292966;
+    padding: 12px;
+    border-radius: 50%;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.follow {
+    margin-top: 24px;
+    font-weight: bold;
+}
+
+.socialIcons {
+    display: flex;
+    gap: 14px;
+    margin-top: 12px;
+    font-size: 18px;
+    color: #292966;
+}
+
+.Mright h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #292966;
+    margin-bottom: 20px;
+}
+
+.Mright form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.Mright input,
+.Mright textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #cccaff;
+    font-size: 15px;
+    background: white;
+}
+
+.Mright textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.Mright button {
+    background-color: #292966;
+    color: white;
+    padding: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.Mright button:hover {
+    background-color: #1f1f4c;
+}
+
+.infoTitle {
+    font-weight: 600;
+    color: #292966;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.infoContent p {
+    margin: 0;
+}
+
+@media (max-width: 1024px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .left {
+        max-width: 100%;
+    }
+
+    .buttons {
+        justify-content: center;
+    }
+
+    .title {
+        font-size: 36px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+    .contentRow {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .imageWrapper,
+    .textWrapper {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .textWrapper h3 {
+        font-size: 20px;
+    }
+
+    .timeline {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 30px 20px;
+    }
+
+    .title {
+        font-size: 28px;
+    }
+
+    .subtitle {
+        font-size: 15px;
+        margin-bottom: 20px;
+    }
+
+    .heading {
+        font-size: 24px;
+    }
+
+    .subheading {
+        font-size: 15px;
+        margin-bottom: 30px;
+    }
+
+    .card {
+        max-width: 100%;
+        padding: 20px;
+    }
+
+    .iconWrapper {
+        width: 80px;
+        height: 80px;
+    }
+
+    .icon {
+        font-size: 24px;
+    }
+
+    .contactSection {
+        flex-direction: column;
+        padding: 40px 20px;
+    }
+
+    .Mright {
+        padding: 24px;
+    }
+
+    .Mright input,
+    .Mright textarea {
+        font-size: 14px;
+    }
+
+    .Mright button {
+        font-size: 14px;
+    }
+
+    .infoItem {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .story {
+        padding: 0 16px;
+    }
+
+    .contentRow {
+        flex-direction: column;
+        gap: 24px;
+        padding: 0px;
+    }
+
+    .imageWrapper,
+    .textWrapper {
+        max-width: 100%;
+        flex: 1;
+        padding: 0;
+        margin: 0;
+    }
+
+    .image {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .hero {
+        flex-direction: column;
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    .left {
+        max-width: 100%;
+    }
+
+    .buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 16px;
+    }
+
+    .primaryBtn,
+    .secondaryBtn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .title {
+        font-size: 32px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+    .heading {
+        font-size: 24px;
+    }
+
+    .textWrapper p,
+    .textWrapper h3 {
+        font-size: 15px;
+    }
+
+    .timeline {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

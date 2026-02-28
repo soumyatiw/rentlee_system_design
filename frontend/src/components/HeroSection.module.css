@@ -1,0 +1,343 @@
+.hero {
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  padding: 100px 100px;
+  background: linear-gradient(120deg, #292966, #5C5C99, #A3A3CC);
+  background-size: 200% 200%;
+  animation: gradientMove 15s ease infinite;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  color: #fff;
+  flex-wrap: wrap;
+  overflow: hidden;
+  position: relative;
+}
+
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+
+.left {
+  flex: 1;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title {
+  font-size: 56px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.title span {
+  color: #CCCCFF;
+}
+
+.subtitle {
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #f9f9ff;
+}
+
+.searchBox {
+  display: flex;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border-radius: 50px;
+  overflow: hidden;
+  max-width: 500px;
+  margin-bottom: 25px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.searchBox input {
+  flex: 1;
+  padding: 14px 20px;
+  background: transparent;
+  border: none;
+  color: #292966;
+  font-size: 16px;
+  outline: none;
+  padding-left: 35px;
+}
+
+.searchBox input::placeholder {
+  color: #5C5C99;
+}
+
+.searchBox button {
+  background-color: #292966;
+  color: white;
+  padding: 14px 24px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.searchBox button:hover {
+  background-color: #1f1f4b;
+}
+
+.tags {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.tags span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.heroImage {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+  position: absolute;
+  left: 0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #5C5C99;
+  pointer-events: none;
+  /* So it doesn't block clicks */
+}
+
+.popupOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popupContent {
+  background: white;
+  padding: 24px 32px;
+  border-radius: 16px;
+  max-width: 600px;
+  width: 90%;
+  position: relative;
+  text-align: center;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #292966;
+}
+
+.resultList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.resultCard {
+  background: #f5f5ff;
+  padding: 16px;
+  border-radius: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.resultCard:hover {
+  transform: translateY(-3px);
+}
+
+.resultImage {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.resultInfo {
+  /* flex: 1; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.resultTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #292966;
+  margin-bottom: 0px;
+}
+
+.resultText {
+  font-size: 14px;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+  margin-top: 0;
+}
+
+.viewMoreBtn {
+  margin-top: 16px;
+  padding: 10px 16px;
+  background: linear-gradient(90deg, #5C5C99, #292966);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.viewMoreBtn:hover {
+  background: #1f1f4d;
+}
+
+.loginBtn {
+  margin-top: 16px;
+  background: linear-gradient(90deg, #5C5C99, #292966);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.3s ease;
+}
+
+.loginBtn:hover {
+  background: #1f1f4d;
+}
+
+.loginHeading {
+  font-size: 18px;
+  font-weight: 600;
+  color: #292966;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.noMatch {
+  text-align: center;
+  font-size: 16px;
+  color: #292966;
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    padding: 40px 20px;
+    gap: 40px;
+  }
+  .left {
+  flex: 1;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+  .title {
+    font-size: 36px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+
+  .searchBox {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .searchBox input {
+    padding: 12px;
+    font-size: 14px;
+    padding-left: 30px;
+
+  }
+
+  .searchBox button {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* .heroImage {
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+  } */
+  .right {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+    padding: 0;
+    margin: 0;
+  }
+  .heroImage {
+  width: 80vw;
+  padding: 0;
+  height: 40vh;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+}

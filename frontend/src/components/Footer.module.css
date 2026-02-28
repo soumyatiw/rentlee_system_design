@@ -1,0 +1,128 @@
+.footer {
+    background-color: #292966;
+    color: white;
+    padding: 50px 20px 20px;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 100px;
+  }
+  
+  .brandSection {
+    flex: 1 1 250px;
+  }
+  
+  .brand {
+    font-size: 28px;
+    font-weight: 700;
+    color: #CCCCFF;
+  }
+  
+  .socialIcons {
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+  }
+  
+  .socialIcons a {
+    color: white;
+    font-size: 16px;
+    transition: color 0.3s ease;
+  }
+  
+  .socialIcons a:hover {
+    color: #CCCCFF;
+  }
+  
+  .linkSections {
+    display: flex;
+    gap: 60px;
+    flex: 2 1 600px;
+    flex-wrap: wrap;
+  }
+  
+  .linkSections h4 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .linkSections ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .linkSections ul li {
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  
+  .linkSections ul li a {
+    text-decoration: none;
+    color: #E0E0F0;
+    transition: color 0.3s ease;
+  }
+  
+  .linkSections ul li a:hover {
+    color: #CCCCFF;
+  }
+  
+  .bottomBar {
+    margin-top: 40px;
+    border-top: 1px solid #444466;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+    color: #BFBFEF;
+  }
+  
+  .policies {
+    margin-top: 8px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .policies a {
+    color: #CCCCFF;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .policies a:hover {
+    color: #A3A3CC;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+  
+    .linkSections {
+        flex-direction: column;
+        gap: 30px;
+    }
+  
+    .newsletter input {
+        width: 100%;
+        border-radius: 6px;
+        margin-bottom: 10px;
+    }
+  
+    .newsletter button {
+        width: 100%;
+        border-radius: 6px;
+    }
+  }
+  
