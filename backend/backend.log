@@ -1,0 +1,12 @@
+✅  MongoDB connected successfully
+🚀  Rentlee server running on http://127.0.0.1:8080
+➡️  Incoming Request: GET /health
+[2026-04-06T18:32:14.469Z] GET /health
+[0mGET /health [32m200[0m 10.314 ms - 55[0m
+➡️  Incoming Request: POST /api/v1/users/sync
+[2026-04-06T18:32:27.245Z] POST /api/v1/users/sync
+[0mPOST /api/v1/users/sync [32m200[0m 142.802 ms - 530[0m
+➡️  Incoming Request: OPTIONS /api/v1/users/sync
+➡️  Incoming Request: OPTIONS /api/v1/users/sync
+➡️  Incoming Request: OPTIONS /api/v1/users/sync
+➡️  Incoming Request: OPTIONS /api/v1/users/sync

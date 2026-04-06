@@ -1,13 +1,14 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+// TEMPORARY FIX FOR NODE 25 SSR: Node v22+ has a buggy global localStorage.
+// We must delete it before Firebase imports so Firebase doesn't crash during SSR.
+if (typeof window === 'undefined' && typeof global !== 'undefined' && global.localStorage) {
+  try { delete global.localStorage; } catch (e) {}
+}
+
+import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCENTGYBfPCx4yM07sgdtG3ZJTO2P_xhmA",
   authDomain: "rentlee-auth.firebaseapp.com",
@@ -18,8 +19,10 @@ const firebaseConfig = {
   measurementId: "G-7SJG2ZJ5H1"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Initialize Firebase only if there are no existing apps to avoid HMR errors
+const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+// Guard client-specific Firebase initializations behind window check to prevent SSR bugs
+const isBrowser = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined' && typeof window.localStorage.getItem === 'function';
+export const auth = isBrowser ? getAuth(app) : null;
+export const db = isBrowser ? getFirestore(app) : null;
