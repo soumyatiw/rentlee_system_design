@@ -1,54 +1,58 @@
 'use client';
 
 import { useState } from 'react';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { auth } from '@/firebase/config';
-import { syncWithBackend } from '@/lib/api';
 import { useRouter } from 'next/navigation';
+import { loginUser } from '@/lib/api';
+import { useAuthContext } from '@/context/AuthContext';
 import styles from './Login.module.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [errorType, setErrorType] = useState('error'); // 'error' | 'warning'
   const [success, setSuccess] = useState(null);
+  
   const router = useRouter();
+  const { login } = useAuthContext();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(null);
+    setErrorMsg(null);
     setSuccess(null);
     setLoading(true);
 
     try {
-      // 1. Firebase authentication
-      const { user: firebaseUser } = await signInWithEmailAndPassword(auth, email, password);
+      // 1. Native API call
+      const { token } = await loginUser(email, password);
 
-      try {
-        // 2. Sync with backend — stores Rentlee JWT in localStorage
-        await syncWithBackend(firebaseUser);
-      } catch (backendError) {
-        // If the backend refuses the user (e.g., doesn't exist in MongoDB), 
-        // sign them out of Firebase to prevent half-authenticated ghost state
-        await signOut(auth);
-        throw new Error(backendError.message || 'Failed to sync with Rentlee servers');
-      }
+      // 2. Map via Context
+      const decodedUser = login(token);
+      
+      if (!decodedUser) throw new Error('Failed to decode user authentication');
 
       setSuccess('Login successful! Redirecting...');
       setTimeout(() => {
-        router.push('/');
+        // Redirection routing map based on decoded role
+        if (decodedUser.role === 'admin') router.push('/admin/dashboard');
+        else if (decodedUser.role === 'lister') router.push('/lister/dashboard');
+        else router.push('/');
+        
         router.refresh();
-      }, 1000);
+      }, 500);
       
     } catch (err) {
-      let errorMsg = err.message || 'Invalid email or password';
-      if (errorMsg.includes('auth/invalid-credential') || errorMsg.includes('auth/user-not-found') || errorMsg.includes('auth/wrong-password')) {
-        errorMsg = 'Invalid email or password. Please try again.';
-      } else if (errorMsg.includes('auth/too-many-requests')) {
-        errorMsg = 'Too many failed attempts. Please try again later.';
+      const msg = err.message || 'Invalid email or password';
+      
+      // Map 403 HTTP boundary errors dynamically
+      if (msg.includes('awaiting')) {
+        setErrorType('warning'); // Amber
+      } else {
+        setErrorType('error'); // Red
       }
-      setError(errorMsg);
+      
+      setErrorMsg(msg);
     } finally {
       setLoading(false);
     }
@@ -59,7 +63,11 @@ export default function LoginPage() {
       <form className={styles.form} onSubmit={handleLogin}>
         <h2 className={styles.title}>Login to Your Account</h2>
 
-        {error && <div className={styles.error}>{error}</div>}
+        {errorMsg && (
+          <div className={errorType === 'warning' ? styles.warning : styles.error}>
+            {errorMsg}
+          </div>
+        )}
         {success && <div className={styles.success}>{success}</div>}
 
         <input
@@ -83,7 +91,7 @@ export default function LoginPage() {
         </button>
 
         <p className={styles.signupText}>
-          Don&apos;t have an account? <a href="/signup" className={styles.signupLink}>Sign up</a>
+          Don&apos;t have an account? <a href="/register" className={styles.signupLink}>Sign up</a>
         </p>
       </form>
     </div>

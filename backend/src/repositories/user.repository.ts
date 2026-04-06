@@ -60,6 +60,21 @@ class UserRepository {
     const total = await User.countDocuments(query);
     return { listers, total, page, limit };
   }
+  async countUsersByRole(role: string) {
+    return User.countDocuments({ role });
+  }
+
+  async countListersByStatus(status: string) {
+    return User.countDocuments({ role: 'lister', listerStatus: status });
+  }
+
+  async findAllUsers(page: number = 1, limit: number = 10) {
+    const skip = (page - 1) * limit;
+    // We populate the length of savedProperties arrays logically in the route
+    const users = await User.find({ role: 'user' }).skip(skip).limit(limit).select('-password');
+    const total = await User.countDocuments({ role: 'user' });
+    return { users, total, page, limit };
+  }
 }
 
 export default new UserRepository();

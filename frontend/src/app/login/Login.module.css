@@ -97,6 +97,16 @@
   border: 1px solid #d32f2f;
 }
 
+.warning {
+  color: #b45309;
+  background-color: #fef3c7;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #fcd34d;
+}
+
 .success {
   color: #2e7d32;
   background-color: #edf7ed;

@@ -65,6 +65,13 @@ class PropertyRepository {
   async findByOwner(ownerId: string) {
     return Property.find({ owner: ownerId, isActive: true }).sort({ createdAt: -1 });
   }
+  async countListings() {
+    return Property.countDocuments({ isActive: true });
+  }
+
+  async adminForceDelete(id: string) {
+    return Property.findByIdAndDelete(id);
+  }
 }
 
 export default new PropertyRepository();

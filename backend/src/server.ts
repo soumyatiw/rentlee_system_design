@@ -47,11 +47,11 @@ app.get('/health', (_req, res) => {
   res.status(200).json({ status: 'ok', message: 'Rentlee API is running 🚀' });
 });
 
-app.use('/api/auth', authRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/listings', listingRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/admin', adminRoutes);
+app.use('/api/v1/listings', listingRoutes);
 app.use('/api/v1/users', userRoutes);
-app.use('/api/blogs', blogRoutes);
+app.use('/api/v1/blogs', blogRoutes);
 
 // ─── 404 Handler ─────────────────────────────────────────────────────────────
 app.use((_req, res) => {

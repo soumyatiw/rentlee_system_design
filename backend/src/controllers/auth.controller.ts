@@ -8,15 +8,15 @@ import { AppError } from '../utils/AppError';
 
 export const registerUser = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
   const { username, email, password } = req.body;
-  
+
   const existingUser = await userRepository.findByEmail(email);
   if (existingUser) return next(new AppError('Email already in use', 400));
 
   const userData = UserFactory.create('user', { username, email, password });
   const user = await userRepository.create(userData);
-  
+
   const token = generateToken({ id: user.id, role: user.role });
-  
+
   sendSuccess(res, { user: { id: user.id, username, email, role: user.role }, token }, 'User registered successfully', 201);
 });
 
@@ -52,6 +52,6 @@ export const login = asyncHandler(async (req: Request, res: Response, next: Next
   }
 
   const token = generateToken({ id: user.id, role: user.role });
-  
+
   sendSuccess(res, { user: { id: user.id, username: user.username, email: user.email, role: user.role, listerStatus: user.listerStatus }, token }, 'Login successful', 200);
 });

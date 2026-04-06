@@ -62,3 +62,33 @@ export const suspendLister = asyncHandler(async (req: Request, res: Response, _n
   const lister = await handleListerStatusChange(req.params.id, 'suspended', 'suspension');
   sendSuccess(res, lister, 'Lister suspended successfully');
 });
+
+// Added for extensive Admin Dashboard requirements
+import listingRepository from '../repositories/listing.repository';
+
+export const getAdminStats = asyncHandler(async (_req: Request, res: Response, _next: NextFunction) => {
+  const totalUsers = await userRepository.countUsersByRole('user');
+  const totalApprovedListers = await userRepository.countListersByStatus('approved');
+  const pendingRequests = await userRepository.countListersByStatus('pending');
+  const totalListings = await listingRepository.countListings();
+
+  sendSuccess(res, {
+    users: totalUsers,
+    listers: totalApprovedListers,
+    pending: pendingRequests,
+    listings: totalListings
+  }, 'Fetched admin stats', 200);
+});
+
+export const getAllUsers = asyncHandler(async (req: Request, res: Response, _next: NextFunction) => {
+  const { page, limit } = getPagination(req);
+  const result = await userRepository.findAllUsers(page, limit);
+  sendSuccess(res, result, 'Fetched all users', 200);
+});
+
+export const deleteListing = asyncHandler(async (req: Request, res: Response, _next: NextFunction) => {
+  const { id } = req.params;
+  const listing = await listingRepository.adminForceDelete(id);
+  if (!listing) throw new AppError('Listing not found', 404);
+  sendSuccess(res, null, 'Listing deleted forcefully directly by Administrator', 200);
+});

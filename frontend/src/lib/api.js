@@ -56,26 +56,29 @@ const apiFetch = async (path, options = {}) => {
   return data;
 };
 
-// ─── Auth / User sync ─────────────────────────────────────────────────────────
+// ─── Auth ─────────────────────────────────────────────────────────
 
-/**
- * Call this right after a successful Firebase login/signup.
- * It syncs the Firebase user to MongoDB and stores the Rentlee JWT.
- *
- * @param {import('firebase/auth').User} firebaseUser
- * @returns {Promise<{ user: object, token: string }>}
- */
-export const syncWithBackend = async (firebaseUser) => {
-  const result = await apiFetch('/users/sync', {
+export const loginUser = async (email, password) => {
+  const result = await apiFetch('/auth/login', {
     method: 'POST',
-    body: JSON.stringify({
-      firebaseUid: firebaseUser.uid,
-      email: firebaseUser.email,
-      username: firebaseUser.displayName || firebaseUser.email?.split('@')[0],
-    }),
+    body: JSON.stringify({ email, password }),
   });
+  return result.data; // { user, token }
+};
 
-  setToken(result.data.token);
+export const registerNormalUser = async (userData) => {
+  const result = await apiFetch('/auth/register/user', {
+    method: 'POST',
+    body: JSON.stringify(userData),
+  });
+  return result.data;
+};
+
+export const registerLister = async (listerData) => {
+  const result = await apiFetch('/auth/register/lister', {
+    method: 'POST',
+    body: JSON.stringify(listerData),
+  });
   return result.data;
 };
 
@@ -94,13 +97,10 @@ export const saveProperty = (propertyId) =>
 export const unsaveProperty = (propertyId) =>
   apiFetch(`/users/me/saved/${propertyId}`, { method: 'DELETE' });
 
-// ─── Properties ──────────────────────────────────────────────────────────────
+// ─── Listings (Formerly Properties) ──────────────────────────────────────────
 
 /**
- * Fetch properties with optional filters.
- * Filters match the BrowseHero search form.
- *
- * @param {{ city?: string, category?: string, minRent?: number, maxRent?: number, bedrooms?: number, page?: number, limit?: number }} filters
+ * Fetch listings with optional filters.
  */
 export const fetchProperties = (filters = {}) => {
   const params = new URLSearchParams();
@@ -110,21 +110,21 @@ export const fetchProperties = (filters = {}) => {
     }
   });
   const query = params.toString();
-  return apiFetch(`/properties${query ? `?${query}` : ''}`);
+  return apiFetch(`/listings${query ? `?${query}` : ''}`);
 };
 
-export const fetchPropertyById = (id) => apiFetch(`/properties/${id}`);
+export const fetchPropertyById = (id) => apiFetch(`/listings/${id}`);
 
 export const createProperty = (data) =>
-  apiFetch('/properties', { method: 'POST', body: JSON.stringify(data) });
+  apiFetch('/listings', { method: 'POST', body: JSON.stringify(data) });
 
 export const updateProperty = (id, data) =>
-  apiFetch(`/properties/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+  apiFetch(`/listings/${id}`, { method: 'PUT', body: JSON.stringify(data) });
 
 export const deleteProperty = (id) =>
-  apiFetch(`/properties/${id}`, { method: 'DELETE' });
+  apiFetch(`/listings/${id}`, { method: 'DELETE' });
 
-export const getMyListings = () => apiFetch('/properties/my-listings');
+export const getMyListings = () => apiFetch('/listings/lister/dashboard');
 
 // ─── Blogs ───────────────────────────────────────────────────────────────────
 
@@ -142,5 +142,30 @@ export const createBlog = (data) =>
 export const updateBlog = (id, data) =>
   apiFetch(`/blogs/${id}`, { method: 'PUT', body: JSON.stringify(data) });
 
-export const deleteBlog = (id) =>
-  apiFetch(`/blogs/${id}`, { method: 'DELETE' });
+// ─── Admin Tools ─────────────────────────────────────────────────────────────
+
+export const fetchAdminStats = () => apiFetch('/admin/stats');
+
+export const fetchAllUsers = (page = 1, limit = 10) => 
+  apiFetch(`/admin/users?page=${page}&limit=${limit}`);
+
+export const fetchPendingListers = (page = 1, limit = 10) => 
+  apiFetch(`/admin/listers/pending?page=${page}&limit=${limit}`);
+
+export const fetchAllListers = (statusFilter = '', page = 1, limit = 10) => {
+  const query = new URLSearchParams({ page, limit });
+  if (statusFilter && statusFilter !== 'All') query.set('status', statusFilter.toLowerCase());
+  return apiFetch(`/admin/listers?${query.toString()}`);
+};
+
+export const approveLister = (id) => 
+  apiFetch(`/admin/listers/${id}/approve`, { method: 'PATCH' });
+
+export const rejectLister = (id, reason) => 
+  apiFetch(`/admin/listers/${id}/reject`, { method: 'PATCH', body: JSON.stringify({ reason }) });
+
+export const suspendLister = (id) => 
+  apiFetch(`/admin/listers/${id}/suspend`, { method: 'PATCH' });
+
+export const adminDeleteListing = (id) => 
+  apiFetch(`/admin/listings/${id}`, { method: 'DELETE' });
