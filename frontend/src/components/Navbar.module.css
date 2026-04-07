@@ -95,7 +95,7 @@
 }
 
 .dotBtn:hover {
-  background-color: #CCCCFF;
+  background: #CCCCFF;
 }
 
 .filled {
@@ -185,7 +185,7 @@
   background: white;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  min-width: 120px;
+  min-width: 140px;
   z-index: 1000;
   display: flex;
   flex-direction: column;
@@ -204,6 +204,7 @@
   cursor: pointer;
   width: 100%;
   transition: background 0.2s;
+  text-decoration: none;
 }
 
 .dropdown a:hover,

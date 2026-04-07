@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 
 import ClientProviders from '@/components/ClientProviders';
 import AOSWrapper from '@/components/AOSWrapper';
+import Navbar from '@/components/Navbar';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <ClientProviders>
           <AOSWrapper>
+            <Navbar />
             {children}
           </AOSWrapper>
         </ClientProviders>

@@ -5,8 +5,19 @@
 [0mGET /health [32m200[0m 10.314 ms - 55[0m
 ➡️  Incoming Request: POST /api/v1/users/sync
 [2026-04-06T18:32:27.245Z] POST /api/v1/users/sync
-[0mPOST /api/v1/users/sync [32m200[0m 142.802 ms - 530[0m
-➡️  Incoming Request: OPTIONS /api/v1/users/sync
-➡️  Incoming Request: OPTIONS /api/v1/users/sync
-➡️  Incoming Request: OPTIONS /api/v1/users/sync
-➡️  Incoming Request: OPTIONS /api/v1/users/sync
+[0mPOST /api/v1/users/sync [32m200[0m 142.node:events:487
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: read EIO
+    at TTY.onStreamRead (node:internal/stream_base_commons:216:20)
+Emitted 'error' event on ReadStream instance at:
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+  errno: -5,
+  code: 'EIO',
+  syscall: 'read'
+}
+
+Node.js v25.9.0
