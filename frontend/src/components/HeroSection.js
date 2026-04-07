@@ -7,7 +7,7 @@ import styles from './HeroSection.module.css';
 import heroImage from '@/assets/hero-image.png';
 import { FaCheckCircle, FaLock, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
 import { LogIn } from 'lucide-react';
-import properties from '@/data/main_data.json';
+import useProperties from '@/hooks/useProperties';
 import { useAuthContext } from '@/context/AuthContext';
 
 export default function HeroSection() {
@@ -15,6 +15,7 @@ export default function HeroSection() {
   const [showPopup, setShowPopup] = useState(false);
   const [matchedProperties, setMatchedProperties] = useState([]);
   const { user } = useAuthContext();
+  const { properties } = useProperties(200);
   const router = useRouter();
 
   const handleSearch = (e) => {

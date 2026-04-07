@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 interface TokenPayload {
   id: string;
   role: string;
+  username?: string;
 }
 
 export const generateToken = (payload: TokenPayload, expiresIn = '7d'): string => {

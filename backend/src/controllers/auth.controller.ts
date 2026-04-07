@@ -15,7 +15,7 @@ export const registerUser = asyncHandler(async (req: Request, res: Response, nex
   const userData = UserFactory.create('user', { username, email, password });
   const user = await userRepository.create(userData);
 
-  const token = generateToken({ id: user.id, role: user.role });
+  const token = generateToken({ id: user.id, role: user.role, username: user.username });
 
   sendSuccess(res, { user: { id: user.id, username, email, role: user.role }, token }, 'User registered successfully', 201);
 });
@@ -51,7 +51,7 @@ export const login = asyncHandler(async (req: Request, res: Response, next: Next
     if (user.listerStatus === 'suspended') return next(new AppError('Your account has been suspended', 403));
   }
 
-  const token = generateToken({ id: user.id, role: user.role });
+  const token = generateToken({ id: user.id, role: user.role, username: user.username });
 
   sendSuccess(res, { user: { id: user.id, username: user.username, email: user.email, role: user.role, listerStatus: user.listerStatus }, token }, 'Login successful', 200);
 });

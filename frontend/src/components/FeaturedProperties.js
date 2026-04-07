@@ -3,15 +3,16 @@
 import { useState } from 'react';
 import styles from './FeaturedProperties.module.css';
 import Link from 'next/link';
-import properties from '@/data/main_data.json';
+import useProperties from '@/hooks/useProperties';
 import { FaMapMarkerAlt, FaBed, FaBath, FaRulerCombined } from 'react-icons/fa';
 import { useAuthContext } from '@/context/AuthContext';
 
 const FeaturedProperties = () => {
-  const featured = properties.slice(0, 3);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
+  const { properties } = useProperties(5);
+  const featured = properties.slice(0, 3);
   const { user } = useAuthContext();
   const isLoggedIn = !!user;
 
@@ -32,7 +33,7 @@ const FeaturedProperties = () => {
 
       <div className={styles.grid} data-aos="fade-up" data-aos-duration="2000">
         {featured.map((property) => (
-          <div className={styles.card} key={property.id}>
+          <div className={styles.card} key={property._id}>
             <img src={property.image_url} alt={property.title} className={styles.image} />
             <div className={styles.details}>
               <h3>{property.title}</h3>

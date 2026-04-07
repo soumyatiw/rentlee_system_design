@@ -4,7 +4,7 @@
  * The Rentlee JWT is stored in localStorage under 'rentlee_token'.
  */
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:5002/api/v1';
 
 // ─── Token helpers ────────────────────────────────────────────────────────────
 

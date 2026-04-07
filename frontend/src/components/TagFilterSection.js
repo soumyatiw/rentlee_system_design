@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import styles from './TagFilterSection.module.css';
-import propertiesData from '@/data/main_data.json';
+import useProperties from '@/hooks/useProperties';
 import { Flame, Building2, Home, Hotel, Castle } from 'lucide-react';
 import { BedDouble, Bath, Ruler, Sofa, CalendarDays, MapPin, XCircle } from 'lucide-react';
 import { useAuthContext } from '@/context/AuthContext';
@@ -21,10 +21,12 @@ export default function TagFilterSection() {
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [selectedProperty, setSelectedProperty] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const { properties: propertiesData } = useProperties(200);
   const { user } = useAuthContext();
   const isLoggedIn = !!user;
 
   useEffect(() => {
+    if (!propertiesData || propertiesData.length === 0) return;
     let filtered;
 
     if (selectedTag === 'Popular') {
@@ -38,7 +40,7 @@ export default function TagFilterSection() {
     }
 
     setFilteredProperties(filtered);
-  }, [selectedTag]);
+  }, [selectedTag, propertiesData]);
 
   const handleViewDetails = (property) => {
     setSelectedProperty(property);

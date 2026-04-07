@@ -27,13 +27,24 @@ export default function FullMapView({ properties }) {
 
   const isLoggedIn = !!user; 
 
-  // Group properties by lat/lng
+  // Group properties by city
   const grouped = useMemo(() => {
     const map = {};
-    properties.forEach((prop) => {
-      const key = `${prop.lat},${prop.lng}`;
-      if (!map[key]) map[key] = [];
-      map[key].push(prop);
+    const propertyArray = Array.isArray(properties) ? properties : properties?.data || [];
+    
+    propertyArray.forEach((prop) => {
+      if (!prop.city) return;
+      
+      const key = prop.city;
+      if (!map[key]) {
+        map[key] = {
+           city: prop.city,
+           latitude: prop.latitude || 22.9734,
+           longitude: prop.longitude || 78.6569,
+           properties: []
+        };
+      }
+      map[key].properties.push(prop);
     });
     return map;
   }, [properties]);
@@ -48,19 +59,18 @@ export default function FullMapView({ properties }) {
       >
         <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-        {Object.entries(grouped).map(([key, group], idx) => {
-          const [lat, lng] = key.split(',').map(Number);
+        {Object.values(grouped).map((group, idx) => {
           return (
             <Marker
               key={idx}
-              position={[lat, lng]}
+              position={[group.latitude, group.longitude]}
               icon={customIcon}
               eventHandlers={{
-                click: () => setSelectedCoords(key),
+                click: () => setSelectedCoords(group.city),
               }}
             >
               <Popup>
-                📍 {group.length} Property{group.length > 1 ? 'ies' : ''} here
+                📍 {group.properties.length} Property{group.properties.length > 1 ? 'ies' : ''} in {group.city}
               </Popup>
             </Marker>
           );
@@ -72,14 +82,14 @@ export default function FullMapView({ properties }) {
           {isLoggedIn ? (
             <>
               <h3>
-                <MapPin size={16} /> Properties in {grouped[selectedCoords]?.[0]?.city || selectedCoords}
+                <MapPin size={16} /> Properties in {selectedCoords}
               </h3>
-              {grouped[selectedCoords].map((prop, index) => (
+              {grouped[selectedCoords]?.properties?.map((prop, index) => (
                 <div key={index} className={styles.card}>
                   <img src={prop.image_url} alt={prop.title} />
                   <div>
                     <h4>{prop.title}</h4>
-                    <p>₹{prop.rent}/mo • {prop.bedrooms}BHK • {prop.area_sqft} sqft</p>
+                    <p>₹{prop.rent.toLocaleString()}/mo • {prop.bedrooms}BHK • {prop.area_sqft} sqft</p>
                     <p>{prop.locality}, {prop.city}</p>
                   </div>
                 </div>

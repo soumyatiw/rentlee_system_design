@@ -4,9 +4,9 @@ import { useState } from 'react';
 import Image from 'next/image';
 import styles from './BrowseHero.module.css';
 import bheroImage from '@/assets/browsehero.png';
-import propertiesData from '@/data/main_data.json';
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/context/AuthContext';
+import useProperties from '@/hooks/useProperties';
 import { MapPin, Building2, IndianRupee, BedDouble, Bath, Ruler, Sofa, CalendarDays, Search, X, Phone, LogIn } from 'lucide-react';
 import Link from 'next/link';
 
@@ -18,6 +18,7 @@ export default function BrowseHero() {
   const [results, setResults] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const { user } = useAuthContext();
+  const { properties: propertiesData } = useProperties(200);
   const router = useRouter();
   const isLoggedIn = !!user;
 
