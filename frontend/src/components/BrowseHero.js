@@ -6,9 +6,9 @@ import styles from './BrowseHero.module.css';
 import bheroImage from '@/assets/browsehero.png';
 import { useRouter } from 'next/navigation';
 import { useAuthContext } from '@/context/AuthContext';
-import useProperties from '@/hooks/useProperties';
-import { MapPin, Building2, IndianRupee, BedDouble, Bath, Ruler, Sofa, CalendarDays, Search, X, Phone, LogIn } from 'lucide-react';
-import Link from 'next/link';
+import { fetchProperties } from '@/lib/api';
+import { MapPin, Building2, IndianRupee, BedDouble, Bath, Ruler, Sofa, CalendarDays, Search, X, Phone, LogIn, Heart } from 'lucide-react';
+import useSavedProperties from '@/hooks/useSavedProperties';
 
 export default function BrowseHero() {
   const [location, setLocation] = useState('');
@@ -18,40 +18,45 @@ export default function BrowseHero() {
   const [results, setResults] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const { user } = useAuthContext();
-  const { properties: propertiesData } = useProperties(200);
   const router = useRouter();
   const isLoggedIn = !!user;
+  const { toggleSave, isSaved } = useSavedProperties();
 
-  const handleSearch = (e) => {
+  const handleToggleSave = async (e, id) => {
+    e.stopPropagation();
+    await toggleSave(id);
+  };
+
+  const handleSearch = async (e) => {
     e.preventDefault();
-    let filtered = propertiesData;
-
-    if (location) {
-      filtered = filtered.filter(p =>
-        p.city.toLowerCase().includes(location.toLowerCase()) ||
-        p.locality.toLowerCase().includes(location.toLowerCase())
-      );
-    }
-
-    if (type !== 'Any type') {
-      filtered = filtered.filter(p => p.category.toLowerCase() === type.toLowerCase());
-    }
-
+    
+    // Convert text filters into backend parameters
+    const filters = {};
+    if (location) filters.city = location;
+    if (type !== 'Any type') filters.category = type;
+    if (bedrooms !== 'Any') filters.bedrooms = bedrooms;
+    
     if (price !== 'Any price') {
-      filtered = filtered.filter(p => {
-        const rent = p.rent;
-        if (price === 'Under ₹10,000') return rent < 10000;
-        if (price === '₹10,000 - ₹20,000') return rent >= 10000 && rent <= 20000;
-        if (price === '₹20,000 - ₹40,000') return rent > 20000 && rent <= 40000;
-        if (price === '₹40,000+') return rent > 40000;
-      });
+      if (price === 'Under ₹10,000') filters.maxRent = 10000;
+      else if (price === '₹10,000 - ₹20,000') { filters.minRent = 10000; filters.maxRent = 20000; }
+      else if (price === '₹20,000 - ₹40,000') { filters.minRent = 20000; filters.maxRent = 40000; }
+      else if (price === '₹40,000+') filters.minRent = 40000;
     }
+    
+    filters.limit = 1000;
 
-    if (bedrooms !== 'Any') {
-      filtered = filtered.filter(p => p.bedrooms >= parseInt(bedrooms));
+    try {
+      const res = await fetchProperties(filters);
+      if (res.success && res.data?.data) {
+        setResults(res.data.data);
+      } else {
+        setResults([]);
+      }
+    } catch(err) {
+      console.error(err);
+      setResults([]);
     }
-
-    setResults(filtered);
+    
     setShowPopup(true);
   };
 
@@ -119,8 +124,15 @@ export default function BrowseHero() {
               results.length > 0 ? (
                 <div className={styles.resultsGrid}>
                   {results.map((property, idx) => (
-                    <div key={idx} className={styles.resultCard}>
-                      <img src={property.image_url} alt={property.title} className={styles.resultImage} />
+                    <div key={property._id || idx} className={styles.resultCard}>
+                      <div className={styles.imageContainer}>
+                        <img src={property.image_url} alt={property.title} className={styles.resultImage} />
+                        {user?.role === 'user' && (
+                          <button className={styles.saveBtn} onClick={(e) => handleToggleSave(e, property._id)}>
+                            <Heart fill={isSaved(property._id) ? '#ff4444' : 'none'} color={isSaved(property._id) ? '#ff4444' : 'white'} size={18} />
+                          </button>
+                        )}
+                      </div>
                       <div className={styles.resultDetails}>
                         <h3>{property.title}</h3>
                         <p><IndianRupee size={14} /> {property.rent.toLocaleString()}/mo</p>

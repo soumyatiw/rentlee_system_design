@@ -6,30 +6,39 @@ import Image from 'next/image';
 import styles from './HeroSection.module.css';
 import heroImage from '@/assets/hero-image.png';
 import { FaCheckCircle, FaLock, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
-import { LogIn } from 'lucide-react';
-import useProperties from '@/hooks/useProperties';
+import { LogIn, Heart } from 'lucide-react';
+import useSavedProperties from '@/hooks/useSavedProperties';
 import { useAuthContext } from '@/context/AuthContext';
+import { fetchProperties } from '@/lib/api';
 
 export default function HeroSection() {
   const [searchQuery, setSearchQuery] = useState('');
   const [showPopup, setShowPopup] = useState(false);
   const [matchedProperties, setMatchedProperties] = useState([]);
   const { user } = useAuthContext();
-  const { properties } = useProperties(200);
   const router = useRouter();
+  const { toggleSave, isSaved } = useSavedProperties();
+  const isLoggedIn = !!user;
 
-  const handleSearch = (e) => {
+  const handleToggleSave = async (e, id) => {
+    e.stopPropagation();
+    await toggleSave(id);
+  };
+
+  const handleSearch = async (e) => {
     e.preventDefault();
-    if (!user) {
-      setShowPopup(true);
-      return;
+    if (!searchQuery.trim()) return;
+
+    try {
+      const res = await fetchProperties({ city: searchQuery, limit: 10 });
+      if (res.success && res.data?.data) {
+        setMatchedProperties(res.data.data);
+      } else {
+        setMatchedProperties([]);
+      }
+    } catch (err) {
+      setMatchedProperties([]);
     }
-
-    const matches = properties.filter((p) =>
-      p.city.toLowerCase().includes(searchQuery.toLowerCase())
-    ).slice(0, 2);
-
-    setMatchedProperties(matches);
     setShowPopup(true);
   };
 
@@ -82,8 +91,15 @@ export default function HeroSection() {
                 <h3 className={styles.popupHeading}>Top Matches in {searchQuery}</h3>
                 <div className={styles.resultList}>
                   {matchedProperties.map((p, i) => (
-                    <div key={i} className={styles.resultCard}>
-                      <img src={p.image_url} alt={p.title} className={styles.resultImage} />
+                    <div key={p._id || i} className={styles.resultCard}>
+                      <div className={styles.imageContainer}>
+                        <img src={p.image_url} alt={p.title} className={styles.resultImage} />
+                        {user?.role === 'user' && (
+                          <button className={styles.saveBtn} onClick={(e) => handleToggleSave(e, p._id)}>
+                            <Heart fill={isSaved(p._id) ? '#ff4444' : 'none'} color={isSaved(p._id) ? '#ff4444' : 'white'} size={18} />
+                          </button>
+                        )}
+                      </div>
                       <div className={styles.resultInfo}>
                         <h4 className={styles.resultTitle}>{p.title}</h4>
                         <p className={styles.resultText}><FaMapMarkerAlt size={14} /> {p.city}, {p.state}</p>

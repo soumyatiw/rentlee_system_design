@@ -17,8 +17,8 @@ router.put('/me', protect, updateMe);
 // Normal user endpoints strictly for "user" role
 const userOnlyAuth = [protect, requireRole('user')];
 
-router.get('/saved', userOnlyAuth, getSavedProperties);
-router.post('/saved/:propertyId', userOnlyAuth, saveProperty);
-router.delete('/saved/:propertyId', userOnlyAuth, unsaveProperty);
+router.get('/me/saved', userOnlyAuth, getSavedProperties);
+router.post('/me/saved/:propertyId', userOnlyAuth, saveProperty);
+router.delete('/me/saved/:propertyId', userOnlyAuth, unsaveProperty);
 
 export default router;

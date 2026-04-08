@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import styles from './TagFilterSection.module.css';
 import useProperties from '@/hooks/useProperties';
-import { Flame, Building2, Home, Hotel, Castle } from 'lucide-react';
+import useSavedProperties from '@/hooks/useSavedProperties';
+import { Flame, Building2, Home, Hotel, Castle, Heart } from 'lucide-react';
 import { BedDouble, Bath, Ruler, Sofa, CalendarDays, MapPin, XCircle } from 'lucide-react';
 import { useAuthContext } from '@/context/AuthContext';
 import Link from 'next/link';
@@ -24,6 +25,12 @@ export default function TagFilterSection() {
   const { properties: propertiesData } = useProperties(200);
   const { user } = useAuthContext();
   const isLoggedIn = !!user;
+  const { toggleSave, isSaved } = useSavedProperties();
+
+  const handleToggleSave = async (e, id) => {
+    e.stopPropagation();
+    await toggleSave(id);
+  };
 
   useEffect(() => {
     if (!propertiesData || propertiesData.length === 0) return;
@@ -71,9 +78,15 @@ export default function TagFilterSection() {
 
       <div className={styles.cardsGrid}>
         {filteredProperties.map((property, idx) => (
-          <div key={idx} className={styles.card}>
-            <img src={property.image_url} alt={property.title} className={styles.image} />
-
+          <div key={property._id || idx} className={styles.card} onClick={() => handleViewDetails(property)}>
+            <div className={styles.imageContainer}>
+              <img src={property.image_url} alt={property.title} className={styles.image} />
+              {isLoggedIn && user?.role === 'user' && (
+                <button className={styles.saveBtn} onClick={(e) => handleToggleSave(e, property._id)}>
+                  <Heart fill={isSaved(property._id) ? '#ff4444' : 'none'} color={isSaved(property._id) ? '#ff4444' : 'white'} size={20} />
+                </button>
+              )}
+            </div>
             <div className={styles.content}>
               <h3 className={styles.title}>{property.title}</h3>
               <p className={styles.price}>₹{property.rent.toLocaleString()}/mo</p>

@@ -44,6 +44,33 @@
     flex-shrink: 0;
   }
   
+  .imageContainer {
+    position: relative;
+    width: 100%;
+  }
+
+  .saveBtn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.4);
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: transform 0.2s, background 0.2s;
+  }
+
+  .saveBtn:hover {
+    transform: scale(1.1);
+    background: rgba(0, 0, 0, 0.6);
+  }
+  
   .details {
     padding: 20px;
   }

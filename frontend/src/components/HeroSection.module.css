@@ -198,9 +198,38 @@
   transform: translateY(-3px);
 }
 
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  flex-shrink: 0;
+}
+
+.saveBtn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.saveBtn:hover {
+  transform: scale(1.1);
+  background: rgba(0, 0, 0, 0.6);
+}
+
 .resultImage {
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 10px;
   flex-shrink: 0;

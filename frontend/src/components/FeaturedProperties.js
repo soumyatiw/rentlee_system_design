@@ -4,7 +4,9 @@ import { useState } from 'react';
 import styles from './FeaturedProperties.module.css';
 import Link from 'next/link';
 import useProperties from '@/hooks/useProperties';
+import useSavedProperties from '@/hooks/useSavedProperties';
 import { FaMapMarkerAlt, FaBed, FaBath, FaRulerCombined } from 'react-icons/fa';
+import { Heart } from 'lucide-react';
 import { useAuthContext } from '@/context/AuthContext';
 
 const FeaturedProperties = () => {
@@ -15,6 +17,12 @@ const FeaturedProperties = () => {
   const featured = properties.slice(0, 3);
   const { user } = useAuthContext();
   const isLoggedIn = !!user;
+  const { toggleSave, isSaved } = useSavedProperties();
+
+  const handleToggleSave = async (e, id) => {
+    e.stopPropagation();
+    await toggleSave(id);
+  };
 
   const handleViewDetails = (property) => {
     setSelectedProperty(property);
@@ -34,7 +42,14 @@ const FeaturedProperties = () => {
       <div className={styles.grid} data-aos="fade-up" data-aos-duration="2000">
         {featured.map((property) => (
           <div className={styles.card} key={property._id}>
-            <img src={property.image_url} alt={property.title} className={styles.image} />
+            <div className={styles.imageContainer}>
+              <img src={property.image_url} alt={property.title} className={styles.image} />
+              {isLoggedIn && user?.role === 'user' && (
+                <button className={styles.saveBtn} onClick={(e) => handleToggleSave(e, property._id)}>
+                  <Heart fill={isSaved(property._id) ? '#ff4444' : 'none'} color={isSaved(property._id) ? '#ff4444' : 'white'} size={20} />
+                </button>
+              )}
+            </div>
             <div className={styles.details}>
               <h3>{property.title}</h3>
               <p className={styles.meta}><FaMapMarkerAlt className={styles.icon} /> {property.city}, {property.state}</p>

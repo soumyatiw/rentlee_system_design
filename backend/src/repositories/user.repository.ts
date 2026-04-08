@@ -38,9 +38,10 @@ class UserRepository {
   }
 
   async getSavedProperties(userId: string) {
-    return User.findById(userId)
+    const user = await User.findById(userId)
       .populate('savedProperties')
       .select('savedProperties');
+    return user ? user.savedProperties : [];
   }
 
   async findListersByStatus(status: string, page: number = 1, limit: number = 10) {
