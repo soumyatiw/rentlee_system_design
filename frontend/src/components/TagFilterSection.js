@@ -111,8 +111,8 @@ export default function TagFilterSection() {
       </div>
 
       {showModal && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modal}>
+        <div className={styles.modalOverlay} onClick={closeModal}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <button className={styles.closeBtn} onClick={closeModal}><XCircle size={20} /></button>
             {selectedProperty && isLoggedIn ? (
               <>

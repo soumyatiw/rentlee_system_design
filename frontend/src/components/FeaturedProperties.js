@@ -72,8 +72,8 @@ const FeaturedProperties = () => {
       </Link>
 
       {showModal && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modal}>
+        <div className={styles.modalOverlay} onClick={closeModal}>
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
             <button className={styles.closeBtn} onClick={closeModal}>×</button>
             {selectedProperty ? (
               isLoggedIn ? (
