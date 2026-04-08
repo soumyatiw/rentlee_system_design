@@ -18,19 +18,13 @@ export default function AddListingModal({ open, onClose, onCreated }) {
   const [furnishing, setFurnishing] = useState('Unfurnished');
   const [availableFrom, setAvailableFrom] = useState(new Date().toISOString().slice(0,10));
   const [contact, setContact] = useState('');
-  const [amenities, setAmenities] = useState(['']);
   const [photoData, setPhotoData] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
   const [loading, setLoading] = useState(false);
 
   if (!open) return null;
 
-  const handleAmenityChange = (index, value) => {
-    setAmenities(prev => prev.map((a, i) => i === index ? value : a));
-  };
-
-  const addAmenity = () => setAmenities(prev => [...prev, '']);
-  const removeAmenity = (index) => setAmenities(prev => prev.filter((_, i) => i !== index));
+  // amenities removed per UI change
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -50,7 +44,6 @@ export default function AddListingModal({ open, onClose, onCreated }) {
         furnishing,
         available_from: availableFrom,
         contact,
-        amenities: amenities.filter(Boolean),
       };
       if (photoData) payload.image_url = photoData;
       const res = await createProperty(payload);
@@ -101,16 +94,7 @@ export default function AddListingModal({ open, onClose, onCreated }) {
           <input className={styles.input} placeholder="Available from" value={availableFrom} onChange={(e) => setAvailableFrom(e.target.value)} required type="date" />
           <input className={styles.input} placeholder="Contact number or email" value={contact} onChange={(e) => setContact(e.target.value)} required />
 
-          <div>
-            <label style={{ fontWeight: 700, display: 'block', marginBottom: 8 }}>Amenities</label>
-            {amenities.map((a, i) => (
-              <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
-                <input className={styles.input} placeholder={`Amenity ${i + 1}`} value={a} onChange={(e) => handleAmenityChange(i, e.target.value)} />
-                <button type="button" onClick={() => removeAmenity(i)}>Remove</button>
-              </div>
-            ))}
-            <button type="button" onClick={addAmenity}>Add amenity</button>
-          </div>
+          {/* Amenities removed per request */}
 
           <div style={{ marginTop: 8 }}>
             <input

@@ -125,12 +125,7 @@ export default function Navbar() {
         {user ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             
-            {/* Add Property Button for Listers */}
-            {user.role === 'lister' && (
-              <Link href="/lister/listings/new">
-                <button className={`${styles.dotBtn} ${styles.filled}`}>Add Property</button>
-              </Link>
-            )}
+            {/* Removed Add Property button; listers use My Listings page modal */}
 
             <div className={styles.userMenu} ref={dropdownRef}>
               <div className={styles.avatar} onClick={() => setDropdownOpen(prev => !prev)}>
