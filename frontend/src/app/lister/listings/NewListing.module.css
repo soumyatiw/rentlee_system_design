@@ -1,0 +1,98 @@
+.container {
+  padding: 56px 40px 40px; /* top padding increased so navbar doesn't overlap */
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.listingsContainer {
+  padding-top: 64px; /* extra spacing to ensure navbar doesn't cover content */
+}
+
+.title {
+  font-size: 28px;
+  color: #222;
+  margin-bottom: 8px;
+}
+
+.form {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.input {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  outline: none;
+}
+.input:focus { border-color: #6b63c9; }
+
+.fileInput {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px dashed #ccc;
+  background: #fafafa;
+}
+
+.fileInputHidden {
+  display: none;
+}
+
+.fileButton {
+  display: inline-block;
+  background: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-weight: 600;
+}
+.fileButton:hover { background: #f3f3f3; }
+
+.preview {
+  margin-top: 8px;
+}
+
+.button {
+  background: #6b63c9;
+  color: white;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.button:disabled { opacity: 0.7; cursor: not-allowed; }
+
+.hint { color: #666; margin-top: 6px; }
+
+/* Modal styles */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+}
+.modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 720px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  position: relative;
+}
+.modalClose {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  cursor: pointer;
+}

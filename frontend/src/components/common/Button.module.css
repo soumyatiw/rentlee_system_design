@@ -1,0 +1,15 @@
+.primary {
+  background: linear-gradient(90deg, #5C5C99, #292966);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 12px;
+  transition: background-color 0.2s ease, transform 0.08s ease;
+}
+.primary:hover {
+  background: #1f1f4d;
+  transform: translateY(-1px);
+}
