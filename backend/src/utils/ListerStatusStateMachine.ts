@@ -10,15 +10,10 @@ export class ListerStatusStateMachine {
     suspended: ['approved'],
   };
 
-  /**
-   * Attempts to transition the state. Throws an AppError if invalid.
-   */
   static transition(currentState: ListerStatus | undefined, nextState: ListerStatus): ListerStatus {
-    // If undefined (e.g. role is not a lister), we might want to block it entirely.
     if (!currentState) {
       throw new AppError('Only valid listers can have a status transition.', 400);
     }
-
     const validNextStates = this.transitions[currentState];
     if (!validNextStates.includes(nextState)) {
       throw new AppError(

@@ -65,13 +65,13 @@ app.use(errorHandler);
 const startServer = async (): Promise<void> => {
   try {
     await mongoose.connect(MONGO_URI);
-    console.log('✅  MongoDB connected successfully');
+    console.log('MongoDB connected successfully');
 
     app.listen(Number(PORT), '127.0.0.1', () => {
-      console.log(`🚀  Rentlee server running on http://127.0.0.1:${PORT}`);
+      console.log(`Rentlee server running on http://127.0.0.1:${PORT}`);
     });
   } catch (err) {
-    console.error('❌  Failed to connect to MongoDB:', err);
+    console.error('Failed to connect to MongoDB:', err);
     process.exit(1);
   }
 };

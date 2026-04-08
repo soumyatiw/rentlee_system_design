@@ -1,7 +1,3 @@
-/**
- * Converts a string to a URL-friendly slug.
- * e.g. "Hello World! This is Rentlee" → "hello-world-this-is-rentlee"
- */
 export const slugify = (text: string): string => {
   return text
     .toString()
