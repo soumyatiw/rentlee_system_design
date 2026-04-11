@@ -1,172 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
 .card {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 32px; /* Smoother, larger radius */
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  font-family: 'Poppins', sans-serif;
 }
 
 .card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 30px 60px rgba(41, 41, 102, 0.12);
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(80, 80, 151, 0.3);
 }
 
 .linkWrapper {
   text-decoration: none;
   color: inherit;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .imageContainer {
   position: relative;
-  height: 200px;
+  height: 240px;
   overflow: hidden;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .card:hover .image {
-  transform: scale(1.1);
+  transform: scale(1.15);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 60%, rgba(0,0,0,0.4) 100%);
+  pointer-events: none;
 }
 
 .saveBtn {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(4px);
-  border: none;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
   z-index: 10;
+  color: white;
 }
 
 .saveBtn:hover {
-  background: rgba(0, 0, 0, 0.5);
+  background: white;
+  color: #ff4444;
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .badge {
   position: absolute;
-  bottom: 12px;
-  left: 12px;
-  background: var(--primary-color, #0070f3);
+  top: 16px;
+  left: 16px;
+  background: linear-gradient(90deg, #505097, #A3A3CC);
   color: white;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
+  padding: 6px 16px;
+  border-radius: 128px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(80, 80, 151, 0.3);
+  z-index: 5;
 }
 
 .content {
-  padding: 20px;
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .title {
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-size: 1.25rem;
+  font-weight: 800;
   margin: 0;
-  color: #1a1a1a;
-  white-space: nowrap;
+  color: #292966;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 65%;
+  max-width: 60%;
 }
 
 .price {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: var(--primary-color, #0070f3);
+  font-size: 1.4rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #505097, #292966);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin: 0;
 }
 
 .price span {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #666;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #5C5C99;
+  -webkit-text-fill-color: initial;
 }
 
 .location {
   display: flex;
   align-items: center;
-  gap: 4px;
-  color: #666;
-  font-size: 0.9rem;
-  margin-bottom: 15px;
+  gap: 6px;
+  color: #5C5C99;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 20px;
 }
 
 .specs {
   display: flex;
   justify-content: space-between;
-  padding: 12px 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  margin-bottom: 15px;
+  padding: 16px;
+  background: rgba(240, 240, 255, 0.4);
+  border-radius: 20px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(240, 240, 255, 0.8);
 }
 
 .specItem {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  color: #444;
-  font-weight: 600;
-  font-size: 0.9rem;
+  gap: 4px;
+  color: #292966;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.specItem svg {
+  color: #5C5C99;
+  margin-bottom: 2px;
 }
 
 .specItem span {
-  font-weight: 500;
-  color: #777;
+  font-weight: 600;
+  color: #5C5C99;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: auto;
 }
 
 .status {
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 800;
   text-transform: uppercase;
-  color: #2ecc71;
-  letter-spacing: 0.5px;
+  color: #27ae60;
+  letter-spacing: 1px;
+  background: rgba(39, 174, 96, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
 }
 
 .enquireBtn {
-  background: #f0f7ff;
-  border: 1px solid #e1efff;
-  color: #0070f3;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  background: linear-gradient(90deg, #505097, #A3A3CC);
+  color: white;
+  width: 44px;
+  height: 44px;
+  border-radius: 128px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  border: none;
+  box-shadow: 0 4px 12px rgba(80, 80, 151, 0.2);
 }
 
 .enquireBtn:hover {
-  background: #0070f3;
-  color: white;
+  transform: scale(1.1) rotate(10deg);
+  box-shadow: 0 8px 20px rgba(80, 80, 151, 0.3);
 }

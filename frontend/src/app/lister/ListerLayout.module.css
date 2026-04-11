@@ -1,80 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
 .container {
   min-height: 100vh;
-  background: #f8fafc;
+  background: #fdfdff;
+  font-family: 'Poppins', sans-serif;
 }
 
 .wrapper {
   display: flex;
-  max-width: 1400px;
+  max-width: 1440px;
   margin: 0 auto;
   padding-top: 80px;
-  height: calc(100vh);
+  height: 100vh;
 }
 
 .sidebar {
-  width: 260px;
-  background: white;
-  border-right: 1px solid #e2e8f0;
-  padding: 40px 20px;
+  width: 280px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-right: 1.5px solid #eef0ff;
+  padding: 40px 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.02);
 }
 
 .nav {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .navItem {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
+  gap: 14px;
+  padding: 14px 18px;
   text-decoration: none;
-  color: #64748b;
+  color: #5C5C99;
   font-weight: 600;
-  border-radius: 12px;
-  transition: all 0.2s;
+  border-radius: 16px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
 }
 
 .navItem:hover {
-  background: #f1f5f9;
-  color: #0f172a;
+  background: #f0f0ff;
+  color: #292966;
+  transform: translateX(4px);
 }
 
 .navItem.active {
-  background: var(--primary-color, #0070f3);
+  background: linear-gradient(90deg, #505097, #A3A3CC);
   color: white;
+  box-shadow: 0 10px 20px rgba(80, 80, 151, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .logoutBtn {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  background: #fff1f2;
-  color: #e11d48;
-  border: none;
-  border-radius: 12px;
+  gap: 14px;
+  padding: 14px 18px;
+  background: #fffafa;
+  color: #e74c3c;
+  border: 1px solid #ffeaea;
+  border-radius: 16px;
   cursor: pointer;
-  font-weight: 600;
-  transition: background 0.2s;
+  font-weight: 700;
+  transition: all 0.2s;
+  margin-top: 40px;
 }
 
 .logoutBtn:hover {
-  background: #ffe4e6;
+  background: #e74c3c;
+  color: white;
+  border-color: #e74c3c;
 }
 
 .content {
   flex: 1;
-  padding: 40px;
+  padding: 50px;
   overflow-y: auto;
+  background: linear-gradient(135deg, #fdfdff 0%, #f5f5ff 100%);
+}
+
+@media (max-width: 992px) {
+  .sidebar {
+    width: 240px;
+  }
 }
 
 @media (max-width: 768px) {
   .sidebar {
     display: none;
+  }
+  .content {
+    padding: 30px 20px;
   }
 }

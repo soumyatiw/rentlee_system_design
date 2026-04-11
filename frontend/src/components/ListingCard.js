@@ -23,9 +23,10 @@ export default function ListingCard({ property }) {
       <Link href={`/browse/${property._id}`} className={styles.linkWrapper}>
         <div className={styles.imageContainer}>
           <img src={property.image_url || 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&q=80&w=800'} alt={property.title} className={styles.image} />
+          <div className={styles.overlay}></div>
           {isLoggedIn && user?.role === 'user' && (
             <button className={styles.saveBtn} onClick={handleToggleSave}>
-              <Heart fill={isSaved(property._id) ? '#ff4444' : 'none'} color={isSaved(property._id) ? '#ff4444' : 'white'} size={20} />
+              <Heart fill={isSaved(property._id) ? '#ff4444' : 'none'} color={isSaved(property._id) ? '#ff4444' : 'white'} size={22} />
             </button>
           )}
           <div className={styles.badge}>{property.category}</div>
@@ -38,21 +39,21 @@ export default function ListingCard({ property }) {
           </div>
 
           <p className={styles.location}>
-            <MapPin size={14} /> {property.locality}, {property.city}
+            <MapPin size={16} /> {property.locality}, {property.city}
           </p>
 
           <div className={styles.specs}>
             <div className={styles.specItem}>
-              <BedDouble size={16} />
-              <span>{property.bedrooms}</span>
+              <BedDouble size={20} />
+              <span>{property.bedrooms} Beds</span>
             </div>
             <div className={styles.specItem}>
-              <Bath size={16} />
-              <span>{property.bathrooms}</span>
+              <Bath size={20} />
+              <span>{property.bathrooms} Baths</span>
             </div>
             <div className={styles.specItem}>
-              <Ruler size={16} />
-              <span>{property.area_sqft} sqft</span>
+              <Ruler size={20} />
+              <span>{property.area_sqft} Sqft</span>
             </div>
           </div>
 
@@ -60,11 +61,12 @@ export default function ListingCard({ property }) {
             <span className={styles.status}>{property.status || 'Available'}</span>
             <div className={styles.actions}>
                <button className={styles.enquireBtn}>
-                 <MessageCircle size={16} /> 
+                 <MessageCircle size={20} /> 
                </button>
             </div>
           </div>
         </div>
+
       </Link>
     </div>
   );

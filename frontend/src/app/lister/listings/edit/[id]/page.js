@@ -47,12 +47,28 @@ export default function EditListing() {
 
   if (fetching) return <div style={{textAlign: 'center', padding: '100px'}}>Loading property details...</div>;
 
-  return (
-    <ListingForm 
-      title="Edit Property Listing" 
-      initialData={property}
-      onSubmit={handleSubmit} 
-      loading={loading} 
-    />
-  );
+    <div className="container" style={{maxWidth: '900px', margin: '0 auto', padding: '40px 0'}}>
+      <ListingForm 
+        title="Edit Property Listing" 
+        initialData={property}
+        onSubmit={handleSubmit} 
+        loading={loading} 
+      />
+      <div style={{marginTop: '20px', textAlign: 'center'}}>
+        <button 
+          onClick={() => router.push('/lister/listings')}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: '#64748b',
+            cursor: 'pointer',
+            textDecoration: 'underline',
+            fontSize: '0.9rem'
+          }}
+        >
+          Cancel and Go Back
+        </button>
+      </div>
+    </div>
+
 }
