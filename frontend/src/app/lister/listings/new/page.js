@@ -1,6 +1,6 @@
 'use client';
 
-import ProtectedRoute from '../../../../components/ProtectedRoute';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 export default function AddListingPage() {
   return (
@@ -12,4 +12,3 @@ export default function AddListingPage() {
     </ProtectedRoute>
   );
 }
-

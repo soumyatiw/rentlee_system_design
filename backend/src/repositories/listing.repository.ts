@@ -18,7 +18,8 @@ export interface PaginationOptions {
 
 class PropertyRepository {
   async findAll(filters: PropertyFilters, pagination: PaginationOptions) {
-    const query: FilterQuery<IProperty> = { isActive: true };
+    const query: FilterQuery<IProperty> = { isActive: { $ne: false } };
+
 
     if (filters.city) query.city = { $regex: filters.city, $options: 'i' };
     if (filters.locality) query.locality = { $regex: filters.locality, $options: 'i' };
@@ -46,6 +47,8 @@ class PropertyRepository {
     return { data, total, page, limit, totalPages: Math.ceil(total / limit) };
   }
 
+
+
   async findById(id: string) {
     return Property.findById(id).populate('owner', 'username email avatar phone');
   }
@@ -63,15 +66,22 @@ class PropertyRepository {
   }
 
   async findByOwner(ownerId: string) {
-    return Property.find({ owner: ownerId, isActive: true }).sort({ createdAt: -1 });
+    return Property.find({ owner: ownerId, isActive: { $ne: false } }).sort({ createdAt: -1 });
   }
+
   async countListings() {
-    return Property.countDocuments({ isActive: true });
+    return Property.countDocuments({ isActive: { $ne: false } });
   }
+
 
   async adminForceDelete(id: string) {
     return Property.findByIdAndDelete(id);
   }
+
+  async findRawAll() {
+    return Property.find({});
+  }
 }
+
 
 export default new PropertyRepository();

@@ -126,6 +126,9 @@ export const deleteProperty = (id) =>
 
 export const getMyListings = () => apiFetch('/listings/lister/dashboard');
 
+export const getListerStats = () => apiFetch('/listings/lister/stats');
+
+
 // ─── Blogs ───────────────────────────────────────────────────────────────────
 
 export const fetchBlogs = ({ page = 1, limit = 9, tag } = {}) => {
@@ -169,3 +172,14 @@ export const suspendLister = (id) =>
 
 export const adminDeleteListing = (id) => 
   apiFetch(`/admin/listings/${id}`, { method: 'DELETE' });
+
+// ─── Enquiries ─────────────────────────────────────────────────────────────
+
+export const sendEnquiry = (propertyId, message) =>
+  apiFetch('/enquiries', { method: 'POST', body: JSON.stringify({ propertyId, message }) });
+
+export const getMyEnquiries = () => apiFetch('/enquiries/my');
+
+export const markEnquiryRead = (id) =>
+  apiFetch(`/enquiries/${id}/read`, { method: 'PATCH' });
+

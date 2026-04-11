@@ -9,6 +9,8 @@ import userRoutes from './routes/user.routes';
 import blogRoutes from './routes/blog.routes';
 import authRoutes from './routes/auth.routes';
 import adminRoutes from './routes/admin.routes';
+import enquiryRoutes from './routes/enquiry.routes';
+
 import { errorHandler } from './middlewares/error.middleware';
 import { requestLogger } from './middlewares/logger.middleware';
 
@@ -52,6 +54,8 @@ app.use('/api/v1/admin', adminRoutes);
 app.use('/api/v1/listings', listingRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/blogs', blogRoutes);
+app.use('/api/v1/enquiries', enquiryRoutes);
+
 
 // ─── 404 Handler ─────────────────────────────────────────────────────────────
 app.use((_req, res) => {
@@ -65,7 +69,10 @@ app.use(errorHandler);
 const startServer = async (): Promise<void> => {
   try {
     await mongoose.connect(MONGO_URI);
-    console.log('MongoDB connected successfully');
+    const dbName = mongoose.connection.db?.databaseName || 'Rentlee';
+    console.log(`MongoDB connected successfully to database: ${dbName}`);
+
+
 
     app.listen(Number(PORT), '127.0.0.1', () => {
       console.log(`Rentlee server running on http://127.0.0.1:${PORT}`);

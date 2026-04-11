@@ -75,3 +75,26 @@ export const getMyProperties = asyncHandler(
     sendSuccess(res, properties, 'Your properties fetched successfully');
   }
 );
+
+
+export const getListerStats = asyncHandler(
+  async (req: Request, res: Response, _next: NextFunction) => {
+    const userId = (req as any).user?.id;
+    const properties = await propertyService.getPropertiesByOwner(userId);
+    
+    // In a real app, we'd count enquiries too. Let's do it here.
+    const totalListings = properties.length;
+    const activeListings = properties.filter(p => p.isActive && p.status === 'Available').length;
+    
+    sendSuccess(res, {
+      totalListings,
+      activeListings,
+      totalViews: properties.reduce((acc, p) => acc + (p.views || 0), 0)
+    }, 'Lister stats fetched');
+  }
+);
+
+
+
+
+

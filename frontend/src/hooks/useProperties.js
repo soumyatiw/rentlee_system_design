@@ -1,19 +1,22 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { fetchProperties } from '@/lib/api';
 
-export default function useProperties(limit = 1000) {
+export default function useProperties(limit = 1000, filters = {}) {
   const [properties, setProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const fetchProps = async () => {
+      setLoading(true);
       try {
-        const res = await fetch(`http://127.0.0.1:5002/api/v1/listings?limit=${limit}`);
-        const json = await res.json();
-        if (json.success && json.data?.data) {
-          setProperties(json.data.data);
+        const res = await fetchProperties({ ...filters, limit });
+        if (res.success && res.data?.data) {
+          setProperties(res.data.data);
+          setTotal(res.data.total);
         } else {
-          console.error('API Error:', json.message);
+          console.error('API Error:', res.message);
         }
       } catch (err) {
         console.error('Failed to fetch properties:', err);
@@ -23,7 +26,7 @@ export default function useProperties(limit = 1000) {
     };
     
     fetchProps();
-  }, [limit]);
+  }, [limit, JSON.stringify(filters)]);
 
-  return { properties, loading };
+  return { properties, loading, total };
 }

@@ -20,9 +20,12 @@ export interface IProperty extends Document {
   amenities: string[];
   owner: mongoose.Types.ObjectId;
   isActive: boolean;
+  status: 'Available' | 'Rented' | 'Hidden';
+  views: number;
   createdAt: Date;
   updatedAt: Date;
 }
+
 
 const PropertySchema = new Schema<IProperty>(
   {
@@ -53,9 +56,16 @@ const PropertySchema = new Schema<IProperty>(
     amenities: { type: [String], default: [] },
     owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     isActive: { type: Boolean, default: true },
+    status: {
+      type: String,
+      enum: ['Available', 'Rented', 'Hidden'],
+      default: 'Available',
+    },
+    views: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
+
 
 // Index for geospatial and search queries
 PropertySchema.index({ city: 1 });

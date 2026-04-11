@@ -1,65 +1,107 @@
 'use client';
 
-import ProtectedRoute from '../../../components/ProtectedRoute';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getMyListings, deleteProperty } from '@/lib/api';
-import ListingCard from '../../../components/ListingCard';
-import AddListingModal from '../../../components/AddListingModal';
-import btnStyles from '../../../components/common/Button.module.css';
+import styles from './MyListings.module.css';
+import { Plus, Edit2, Trash2, Eye, MapPin, IndianRupee, MoreVertical } from 'lucide-react';
+import Link from 'next/link';
 
-export default function MyListingsPage() {
+export default function MyListings() {
   const [listings, setListings] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    let mounted = true;
-    getMyListings()
-      .then(res => {
-        if (mounted && res && res.success) setListings(res.data || []);
-      })
-      .catch(err => setError(err.message || 'Failed to fetch'))
-      .finally(() => mounted && setLoading(false));
-    return () => { mounted = false; };
+    loadListings();
   }, []);
 
-  const handleDelete = async (id) => {
-    if (!confirm('Delete this listing?')) return;
+  const loadListings = async () => {
     try {
-      await deleteProperty(id);
-      setListings(prev => prev.filter(l => l._id !== id));
-    } catch (e) {
-      alert('Delete failed');
+      const res = await getMyListings();
+      if (res.success) setListings(res.data);
+    } catch (err) {
+      console.error('Failed to load listings');
+    } finally {
+      setLoading(false);
     }
   };
 
-  return (
-    <ProtectedRoute allowedRoles={['lister']}>
-      <div style={{ padding: '64px 40px 40px', maxWidth: '1100px', margin: '0 auto' }}>
-        <h1>My Listings</h1>
-        <p style={{ marginTop: '12px', color: '#555' }}>View and manage your property listings here.</p>
-        <div style={{ marginTop: 12 }}>
-          <button className={btnStyles.primary} onClick={() => setModalOpen(true)}>Add Property</button>
-        </div>
+  const handleDelete = async (id) => {
+    if (!confirm('Are you sure you want to delete this listing? It will be marked as inactive.')) return;
+    
+    try {
+      const res = await deleteProperty(id);
+      if (res.success) {
+        setListings(listings.filter(p => p._id !== id));
+      }
+    } catch (err) {
+      alert('Failed to delete listing');
+    }
+  };
 
-        {loading ? <div>Loading...</div> : error ? <div style={{ color: 'red' }}>{error}</div> : (
-          listings.length === 0 ? <div style={{ color: '#666', marginTop: 24 }}>No listings found.</div> : (
-            <div style={{ display: 'grid', gap: 12, marginTop: 20 }}>
-              {listings.map(l => (
-                <div key={l._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <ListingCard listing={l} />
-                  <div style={{ marginLeft: 12 }}>
-                    <button style={{ marginRight: 8 }} onClick={() => alert('Edit flow not implemented')}>Edit</button>
-                    <button onClick={() => handleDelete(l._id)}>Delete</button>
+  if (loading) return <div className={styles.loading}>Loading your properties...</div>;
+
+  return (
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <div>
+          <h1>My Listings</h1>
+          <p>You have <span>{listings.length}</span> properties listed.</p>
+        </div>
+        <Link href="/lister/listings/create" className={styles.createBtn}>
+          <Plus size={18} /> Add New Listing
+        </Link>
+      </header>
+
+      {listings.length > 0 ? (
+        <div className={styles.grid}>
+          {listings.map(listing => (
+            <div key={listing._id} className={styles.card}>
+              <div className={styles.imageSection}>
+                <img src={listing.image_url} alt={listing.title} />
+                <div className={styles.badge}>{listing.category}</div>
+                <div className={`${styles.status} ${styles[listing.status?.toLowerCase()] || styles.available}`}>
+                  {listing.status || 'Available'}
+                </div>
+              </div>
+
+              <div className={styles.infoSection}>
+                <h3 className={styles.title}>{listing.title}</h3>
+                <p className={styles.location}><MapPin size={14} /> {listing.city}, {listing.state}</p>
+                
+                <div className={styles.stats}>
+                  <div className={styles.statItem}>
+                    <p>Rent</p>
+                    <h4>₹{listing.rent.toLocaleString()}</h4>
+                  </div>
+                  <div className={styles.statItem}>
+                    <p>Views</p>
+                    <h4>{listing.views || 0}</h4>
                   </div>
                 </div>
-              ))}
+
+                <div className={styles.actions}>
+                  <Link href={`/browse/${listing._id}`} className={styles.actionBtn} title="View Live">
+                    <Eye size={18} />
+                  </Link>
+                  <Link href={`/lister/listings/edit/${listing._id}`} className={styles.actionBtn} title="Edit">
+                    <Edit2 size={18} />
+                  </Link>
+                  <button className={`${styles.actionBtn} ${styles.delete}`} onClick={() => handleDelete(listing._id)} title="Delete">
+                    <Trash2 size={18} />
+                  </button>
+                </div>
+              </div>
             </div>
-          )
-        )}
-      </div>
-      <AddListingModal open={modalOpen} onClose={() => setModalOpen(false)} onCreated={(newItem) => setListings(prev => [newItem, ...prev])} />
-    </ProtectedRoute>
+          ))}
+        </div>
+      ) : (
+        <div className={styles.emptyCard}>
+          <div className={styles.emptyIcon}><Plus size={48} /></div>
+          <h3>No properties listed yet</h3>
+          <p>Start your journey by adding your first rental property.</p>
+          <Link href="/lister/listings/create" className={styles.emptyBtn}>Add My First Listing</Link>
+        </div>
+      )}
+    </div>
   );
 }

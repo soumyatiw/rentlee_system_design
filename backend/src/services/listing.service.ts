@@ -47,6 +47,11 @@ class PropertyService {
   async getPropertiesByOwner(ownerId: string) {
     return propertyRepository.findByOwner(ownerId);
   }
+
+  async getRawAll() {
+    return propertyRepository.findRawAll();
+  }
 }
+
 
 export default new PropertyService();

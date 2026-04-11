@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+.formCard {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 32px;
+  padding: 50px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
+}
+
+.formTitle {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #292966;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.section {
+  margin-bottom: 40px;
+  padding-bottom: 35px;
+  border-bottom: 1.5px solid #f0f0ff;
+}
+
+.section:last-of-type {
+  border-bottom: none;
+}
+
+.section h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #5C5C99;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.fieldFull {
+  grid-column: 1 / -1;
+}
+
+.field, .fieldFull {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.field label, .fieldFull label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #292966;
+}
+
+.field input, .field select, .fieldFull input, .fieldFull textarea {
+  padding: 14px 20px;
+  border: 1.5px solid #eef0ff;
+  border-radius: 16px;
+  font-family: inherit;
+  font-size: 1rem;
+  background: #fdfdff;
+  color: #292966;
+  transition: all 0.3s ease;
+}
+
+.field input:focus, .fieldFull textarea:focus, .field select:focus {
+  outline: none;
+  border-color: #5C5C99;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(92, 92, 153, 0.1);
+}
+
+.fieldFull textarea {
+  height: 140px;
+  resize: none;
+}
+
+.amenityInput {
+  display: flex;
+  gap: 12px;
+}
+
+.amenityInput input {
+  flex: 1;
+}
+
+.amenityInput button {
+  background: #f0f0ff;
+  border: none;
+  border-radius: 16px;
+  padding: 0 24px;
+  cursor: pointer;
+  color: #5C5C99;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.amenityInput button:hover {
+  background: #5C5C99;
+  color: white;
+}
+
+.tagCloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.tag {
+  background: #f0f0ff;
+  color: #5C5C99;
+  padding: 8px 16px;
+  border-radius: 128px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e1e1ff;
+}
+
+.tag svg {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.tag svg:hover {
+  color: #e74c3c;
+}
+
+.formActions {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.submitBtn {
+  background: linear-gradient(90deg, #5C5C99, #292966);
+  color: white;
+  border: none;
+  padding: 18px 50px;
+  border-radius: 128px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 20px rgba(41, 41, 102, 0.2);
+}
+
+.submitBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px rgba(41, 41, 102, 0.3);
+  background: #1f1f4d;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .formCard {
+    padding: 30px 20px;
+  }
+}
