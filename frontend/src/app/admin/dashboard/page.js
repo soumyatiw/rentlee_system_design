@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { fetchAdminStats, fetchPendingListers, approveLister, rejectLister } from '@/lib/api';
 import styles from '../Admin.module.css';
+import { Users, UserCheck, Clock, Home } from 'lucide-react';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({ users: 0, listers: 0, pending: 0, listings: 0 });
@@ -59,19 +60,31 @@ export default function AdminDashboard() {
 
       <div className={styles.statsGrid}>
         <div className={styles.statCard}>
-          <div className={styles.statTitle}>Total Users</div>
+          <div className={styles.statHeader}>
+            <div className={styles.statTitle}>Total Users</div>
+            <Users size={20} color="#5C5C99" />
+          </div>
           <div className={styles.statValue}>{stats.users}</div>
         </div>
         <div className={styles.statCard}>
-          <div className={styles.statTitle}>Approved Listers</div>
+          <div className={styles.statHeader}>
+            <div className={styles.statTitle}>Approved Listers</div>
+            <UserCheck size={20} color="#5C5C99" />
+          </div>
           <div className={styles.statValue}>{stats.listers}</div>
         </div>
         <div className={styles.statCard}>
-          <div className={styles.statTitle}>Pending Requests</div>
+          <div className={styles.statHeader}>
+            <div className={styles.statTitle}>Pending Requests</div>
+            <Clock size={20} color="#ef4444" />
+          </div>
           <div className={styles.statValue} style={{ color: '#ef4444' }}>{stats.pending}</div>
         </div>
         <div className={styles.statCard}>
-          <div className={styles.statTitle}>Total Listings</div>
+          <div className={styles.statHeader}>
+            <div className={styles.statTitle}>Total Listings</div>
+            <Home size={20} color="#5C5C99" />
+          </div>
           <div className={styles.statValue}>{stats.listings}</div>
         </div>
       </div>

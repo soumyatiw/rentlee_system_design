@@ -16,7 +16,7 @@
 .sidebarHeader h2 {
   font-size: 1.5rem;
   font-weight: 800;
-  color: var(--primary-color, #0070f3);
+  color: #292966;
   margin-bottom: 40px;
   padding: 0 10px;
 }
@@ -47,8 +47,9 @@
 }
 
 .navItem.active {
-  background: #eff6ff;
-  color: var(--primary-color, #0070f3);
+  background: #f5f5ff;
+  color: #292966;
+  font-weight: 700;
 }
 
 .badge {
@@ -65,12 +66,21 @@
 .logoutBtn {
   margin-top: 20px;
   padding: 12px;
-  border: 1px solid #fee2e2;
-  background: #fff1f2;
-  color: #e11d48;
+  border: 1px solid #f0f0ff;
+  background: #fff;
+  color: #5C5C99;
   border-radius: 12px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.logoutBtn:hover {
+  background: #f5f5ff;
+  color: #292966;
 }
 
 .mainContent {
@@ -82,7 +92,7 @@
 .pageTitle {
   font-size: 2rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #292966;
   margin-bottom: 30px;
 }
 
@@ -98,20 +108,32 @@
   padding: 24px;
   border-radius: 20px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e2e8f0;
+  border: 1px solid #eef0ff;
+  border-top: 4px solid #5C5C99;
+  transition: transform 0.2s;
+}
+
+.statCard:hover {
+  transform: translateY(-5px);
+}
+
+.statHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
 .statTitle {
-  color: #64748b;
-  font-size: 0.9rem;
+  color: #5C5C99;
+  font-size: 0.95rem;
   font-weight: 600;
-  margin-bottom: 8px;
 }
 
 .statValue {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #292966;
 }
 
 .tableContainer {

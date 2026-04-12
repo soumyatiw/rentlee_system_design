@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { fetchAdminStats } from '@/lib/api';
 import styles from './Admin.module.css';
 import { useAuthContext } from '@/context/AuthContext';
+import { LayoutDashboard, Clock, Building2, Home, Users, LogOut } from 'lucide-react';
 
 export default function AdminLayout({ children }) {
   const [pendingCount, setPendingCount] = useState(0);
@@ -31,11 +32,11 @@ export default function AdminLayout({ children }) {
   }, [pathname]); // Refresh when navigating inside admin
 
   const navLinks = [
-    { name: 'Dashboard', path: '/admin/dashboard', icon: '📊' },
-    { name: 'Pending Requests', path: '/admin/listers/pending', icon: '⏳', badge: pendingCount },
-    { name: 'All Listers', path: '/admin/listers', icon: '🏢' },
-    { name: 'All Listings', path: '/admin/listings', icon: '🏠' },
-    { name: 'All Users', path: '/admin/users', icon: '👥' },
+    { name: 'Dashboard', path: '/admin/dashboard', icon: <LayoutDashboard size={20} /> },
+    { name: 'Pending Requests', path: '/admin/listers/pending', icon: <Clock size={20} />, badge: pendingCount },
+    { name: 'All Listers', path: '/admin/listers', icon: <Building2 size={20} /> },
+    { name: 'All Listings', path: '/admin/listings', icon: <Home size={20} /> },
+    { name: 'All Users', path: '/admin/users', icon: <Users size={20} /> },
   ];
 
   return (
@@ -63,7 +64,7 @@ export default function AdminLayout({ children }) {
           </nav>
           
           <button className={styles.logoutBtn} onClick={logout}>
-            🚪 Logout
+            <LogOut size={18} style={{ marginRight: 8 }} /> Logout
           </button>
         </aside>
 

@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 import BrowseHero from '@/components/BrowseHero';
+import Footer from '@/components/Footer';
 import TagFilterSection from '@/components/TagFilterSection';
 import ListingCard from '@/components/ListingCard';
 import useProperties from '@/hooks/useProperties';
@@ -26,8 +25,6 @@ export default function Browse() {
 
   return (
     <div className={styles.container}>
-      <Navbar />
-      
       <main className={styles.main}>
         {/* Pass filter callback to Hero so it can update the grid */}
         <BrowseHero onSearch={handleFilterChange} />
