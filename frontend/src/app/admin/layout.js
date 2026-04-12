@@ -13,7 +13,6 @@ export default function AdminLayout({ children }) {
   const [pendingCount, setPendingCount] = useState(0);
   const pathname = usePathname();
   const { logout } = useAuthContext();
-
   useEffect(() => {
     // Basic polling or one-time fetch for stats on layout mount
     const fetchBadge = async () => {

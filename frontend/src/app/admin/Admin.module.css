@@ -1,7 +1,9 @@
 .layout {
   display: flex;
   height: 100vh;
+  padding-top: 64px; /* offset for the fixed global Navbar */
   background: #f1f5f9;
+  box-sizing: border-box;
 }
 
 .sidebar {
