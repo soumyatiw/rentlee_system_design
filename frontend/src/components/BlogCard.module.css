@@ -120,86 +120,248 @@
     background: #1f1f4d;
 }
 
-/* Modal Styles */
+.noResults {
+    text-align: center;
+    color: #64748b;
+    padding: 40px 0;
+    font-size: 16px;
+}
+
+/* ── Modal Overlay ── */
 .modalOverlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(16, 14, 40, 0.65);
+    backdrop-filter: blur(6px);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1200;
+    padding: 24px;
 }
 
 .modalContent {
-    background: white;
-    padding: 40px;
-    border-radius: 16px;
-    max-width: 90vw;
-    width: 90%;
+    background: #ffffff;
+    border-radius: 24px;
+    width: 100%;
+    max-width: 780px;
     max-height: 90vh;
     overflow-y: auto;
     position: relative;
-    text-align: left;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 24px 60px rgba(41, 41, 102, 0.22);
+    animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+@keyframes modalIn {
+    from { opacity: 0; transform: scale(0.94) translateY(16px); }
+    to   { opacity: 1; transform: scale(1)   translateY(0); }
+}
+
+/* ── Hero image block ── */
+.modalHero {
+    position: relative;
+    width: 100%;
+    height: 260px;
+    border-radius: 24px 24px 0 0;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.modalHeroImg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modalHeroOverlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(41,41,102,0.15) 0%, rgba(41,41,102,0.55) 100%);
+}
+
+/* ── Close button (sits on hero) ── */
 .closeBtn {
     position: absolute;
     top: 16px;
-    right: 24px;
-    font-size: 28px;
-    font-weight: bold;
-    background: none;
+    right: 16px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.9);
     border: none;
+    font-size: 22px;
+    font-weight: 700;
     color: #292966;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: background 0.2s, transform 0.2s;
+    z-index: 10;
+}
+
+.closeBtn:hover {
+    background: #fff;
+    transform: scale(1.1);
+}
+
+/* ── Modal header section ── */
+.modalHeader {
+    padding: 28px 36px 0;
+}
+
+.modalCategory {
+    display: inline-block;
+    background: linear-gradient(90deg, #ccccff, #eeeeff);
+    color: #292966;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 999px;
+    margin-bottom: 14px;
 }
 
 .modalTitle {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #292966;
+    font-size: 26px;
+    font-weight: 800;
+    color: #1a1a4e;
+    line-height: 1.35;
+    margin-bottom: 18px;
 }
 
-.metaText {
+.modalMeta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.authorChip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.authorAvatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5C5C99, #292966);
+    color: #fff;
     font-size: 14px;
-    color: #666;
-    margin-bottom: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
-.modalImage {
-    width: 100%;
-    height: 320px;
-    object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 24px;
-}
-
-.ReactMarkdown p {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 16px;
-    line-height: 1.8;
-}
-
-.ReactMarkdown h1 {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 24px 0 12px;
+.authorName {
+    font-size: 14px;
+    font-weight: 600;
     color: #292966;
 }
 
-.ReactMarkdown li {
-    margin-left: 20px;
-    list-style-type: disc;
-    font-size: 15px;
-    color: #444;
-    line-height: 1.6;
+.modalDate {
+    font-size: 13px;
+    color: #94a3b8;
+    margin-left: auto;
 }
 
-.ReactMarkdown strong {
+.divider {
+    height: 2px;
+    background: linear-gradient(90deg, #5C5C99 0%, #ccccff 60%, transparent 100%);
+    border-radius: 999px;
+    margin-bottom: 0;
+}
+
+/* ── Markdown body ── */
+.modalBody {
+    padding: 28px 36px 40px;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Markdown components */
+.mdH1 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1a1a4e;
+    margin: 32px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #eeeeff;
+}
+
+.mdH2 {
+    font-size: 18px;
     font-weight: 700;
     color: #292966;
+    margin: 28px 0 10px;
+}
+
+.mdH3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #3d3d80;
+    margin: 22px 0 8px;
+}
+
+.mdP {
+    font-size: 15px;
+    color: #374151;
+    line-height: 1.85;
+    margin-bottom: 18px;
+}
+
+.mdUl, .mdOl {
+    margin: 0 0 18px 22px;
+}
+
+.mdLi {
+    font-size: 15px;
+    color: #374151;
+    line-height: 1.8;
+    margin-bottom: 6px;
+    list-style-type: disc;
+}
+
+.mdOl .mdLi {
+    list-style-type: decimal;
+}
+
+.mdBlockquote {
+    border-left: 4px solid #5C5C99;
+    background: #f5f5ff;
+    margin: 20px 0;
+    padding: 14px 20px;
+    border-radius: 0 12px 12px 0;
+    font-style: italic;
+    color: #3d3d80;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.mdStrong {
+    font-weight: 700;
+    color: #292966;
+}
+
+.mdCode {
+    background: #eeeeff;
+    color: #3d3d80;
+    font-size: 13px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-family: 'Courier New', monospace;
+}
+
+.mdHr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, #5C5C99, #ccccff, transparent);
+    border-radius: 999px;
+    margin: 28px 0;
 }
