@@ -6,7 +6,11 @@ import heroImage from '@/assets/blog-hero.png'; // rename uploaded image as blog
 
 import { Search } from 'lucide-react';
 
-export default function BlogHeroSection() {
+export default function BlogHeroSection({ searchQuery, setSearchQuery }) {
+    const handleSubmit = (e) => {
+        e.preventDefault(); // prevent page reload on submit
+    };
+
     return (
         <section className={styles.hero}>
             <div className={styles.left}>
@@ -15,11 +19,12 @@ export default function BlogHeroSection() {
                     Discover rental tips, home design hacks, legal insights, and everything you need to know before renting your next space.
                 </p>
 
-                <form className={styles.searchBox} >
+                <form className={styles.searchBox} onSubmit={handleSubmit}>
                     <Search className={styles.icon} />
                     <input
                         type="text"
                         placeholder="Search articles..."
+                        value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                     <button type="submit">Search</button>

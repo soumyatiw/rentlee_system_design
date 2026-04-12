@@ -8,38 +8,53 @@ import styles from './BlogCard.module.css';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 
-export default function BlogPage() {
+export default function BlogPage({ searchQuery = '' }) {
     const [selectedPost, setSelectedPost] = useState(null);
 
+    const filteredPosts = blogPosts.filter((post) => {
+        const q = searchQuery.toLowerCase().trim();
+        if (!q) return true;
+        return (
+            post.title?.toLowerCase().includes(q) ||
+            post.description?.toLowerCase().includes(q) ||
+            post.author?.toLowerCase().includes(q)
+        );
+    });
 
     return (
         <div className={styles.blogWrapper}>
             <h1 className={styles.heading}>Latest Articles</h1>
 
-            <div className={styles.cardContainer}>
-                {blogPosts.map((post) => (
-                    <div className={styles.card} key={post.id}>
-                        <img src={post.image} alt={post.title} className={styles.thumbnail} />
-                        <div className={styles.content}>
-                            <span className={styles.category}>Featured</span>
-                            <h2 className={styles.title}>{post.title}</h2>
-                            <p className={styles.description}>{post.description}</p>
-                            <div className={styles.wrap}>
-                                <div className={styles.meta}>
-                                    <span>{post.author}</span>
-                                    <span>{post.date}</span>
+            {filteredPosts.length === 0 ? (
+                <p style={{ textAlign: 'center', color: '#64748b', padding: '40px 0' }}>
+                    No articles found for &quot;{searchQuery}&quot;.
+                </p>
+            ) : (
+                <div className={styles.cardContainer}>
+                    {filteredPosts.map((post) => (
+                        <div className={styles.card} key={post.id}>
+                            <img src={post.image} alt={post.title} className={styles.thumbnail} />
+                            <div className={styles.content}>
+                                <span className={styles.category}>Featured</span>
+                                <h2 className={styles.title}>{post.title}</h2>
+                                <p className={styles.description}>{post.description}</p>
+                                <div className={styles.wrap}>
+                                    <div className={styles.meta}>
+                                        <span>{post.author}</span>
+                                        <span>{post.date}</span>
+                                    </div>
+                                    <button
+                                        className={styles.readMore}
+                                        onClick={() => setSelectedPost(post)}
+                                    >
+                                        Read More &rarr;
+                                    </button>
                                 </div>
-                                <button
-                                    className={styles.readMore}
-                                    onClick={() => setSelectedPost(post)}
-                                >
-                                    Read More &rarr;
-                                </button>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            )}
 
             {selectedPost && (
                 <div className={styles.modalOverlay}>
@@ -63,11 +78,9 @@ export default function BlogPage() {
                         <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
                             rehypePlugins={[rehypeRaw]}
-                            
                         >
-                            {selectedPost?.content || ""}
+                            {selectedPost?.content || ''}
                         </ReactMarkdown>
-
                     </div>
                 </div>
             )}
