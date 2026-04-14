@@ -39,8 +39,8 @@ The frontend is built using Next.js, while the backend is developed using Node.j
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/rentlee-system-design.git
-cd rentlee-system-design
+git clone https://github.com/soumyatiw/rentlee_system_design.git
+cd rentlee_system_design
 ```
 
 ### 2. Install Frontend Dependencies
