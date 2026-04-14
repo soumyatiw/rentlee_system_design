@@ -8,15 +8,16 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-// Your web app's Firebase configuration
+// Firebase configuration — values come from environment variables.
+// Copy frontend/.env.local.example → frontend/.env.local and fill in your values.
 const firebaseConfig = {
-  apiKey: "AIzaSyCENTGYBfPCx4yM07sgdtG3ZJTO2P_xhmA",
-  authDomain: "rentlee-auth.firebaseapp.com",
-  projectId: "rentlee-auth",
-  storageBucket: "rentlee-auth.firebasestorage.app",
-  messagingSenderId: "854347492867",
-  appId: "1:854347492867:web:3cd4a2d92dfe6da8dc2836",
-  measurementId: "G-7SJG2ZJ5H1"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase only if there are no existing apps to avoid HMR errors
