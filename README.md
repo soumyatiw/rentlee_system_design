@@ -9,71 +9,70 @@ The frontend is built using Next.js, while the backend is developed using Node.j
 
 ---
 ## Folder Structure
-
 backend/
-├── .env                         # Secrets: MONGO_URI, JWT_SECRET, PORT, CLIENT_URL
-├── nodemon.json                 # Auto-restart config for ts-node
-├── package.json                 # Dependencies & npm scripts
-├── tsconfig.json                # TypeScript compiler config
+├── .env # Secrets: MONGO_URI, JWT_SECRET, PORT, CLIENT_URL
+├── nodemon.json # Auto-restart config for ts-node
+├── package.json # Dependencies & npm scripts
+├── tsconfig.json # TypeScript compiler config
 └── src/
-    ├── server.ts                # 🚀 App entry point — bootstrap, middleware, routes, DB connect
-    │
-    ├── config/
-    │   └── db.ts                # connectDB() helper (not used directly, logic inlined in server.ts)
-    │
-    ├── models/
-    │   ├── user.model.ts        # IUser interface + UserSchema + bcrypt pre-save + comparePassword()
-    │   ├── property.model.ts    # IProperty interface + PropertySchema + indexes
-    │   ├── blog.model.ts        # IBlog interface + BlogSchema + indexes
-    │   └── enquiry.model.ts     # IEnquiry interface + EnquirySchema + indexes
-    │
-    ├── repositories/
-    │   ├── user.repository.ts   # UserRepository class — all User DB queries
-    │   ├── listing.repository.ts# PropertyRepository class — all Property DB queries + filter/pagination
-    │   ├── blog.repository.ts   # BlogRepository class — all Blog DB queries
-    │   └── enquiry.repository.ts# EnquiryRepository class — all Enquiry DB queries
-    │
-    ├── services/
-    │   ├── user.service.ts      # UserService — profile CRUD, saved properties
-    │   ├── listing.service.ts   # PropertyService — property CRUD with ownership checks
-    │   ├── blog.service.ts      # BlogService — blog CRUD with slug & readingTime generation
-    │   ├── notification.service.ts # NotificationService (EventEmitter) — email event dispatch
-    │   └── user.factory.ts      # UserFactory — static factory for role-based user object creation
-    │
-    ├── controllers/
-    │   ├── auth.controller.ts   # register, registerLister, login
-    │   ├── user.controller.ts   # getMe, updateMe, saveProperty, unsaveProperty, getSavedProperties
-    │   ├── listing.controller.ts# getAllProperties, getPropertyById, createProperty, update, delete, getMyProperties, getListerStats
-    │   ├── blog.controller.ts   # getAllBlogs, getBlogBySlug, createBlog, updateBlog, deleteBlog
-    │   ├── enquiry.controller.ts# createEnquiry, getMyEnquiries, markEnquiryAsRead
-    │   └── admin.controller.ts  # getPendingListers, getAllListers, approve/reject/suspend, getAdminStats, getAllUsers, deleteListing
-    │
-    ├── middlewares/
-    │   ├── auth.middleware.ts   # protect() (JWT, stateless), restrictTo() — lightweight version
-    │   ├── role.middleware.ts   # protect() (DB-verified JWT), requireRole(), requireApprovedLister()
-    │   ├── error.middleware.ts  # Global error handler — AppError, ValidationError, CastError, Duplicate
-    │   └── logger.middleware.ts # requestLogger — timestamps every request
-    │
-    ├── routes/
-    │   ├── auth.routes.ts       # POST /register/user, /register/lister, /login (+ rate limit + validation)
-    │   ├── user.routes.ts       # GET/PUT /me, GET/POST/DELETE /me/saved/:propertyId
-    │   ├── listing.routes.ts    # CRUD for /listings, lister-specific dashboard & stats
-    │   ├── blog.routes.ts       # Public GET, lister POST/PUT/DELETE
-    │   ├── enquiry.routes.ts    # All protected: POST /, GET /my, PATCH /:id/read
-    │   └── admin.routes.ts      # All admin-only: stats, users, listers, listings
-    │
-    ├── utils/
-    │   ├── AppError.ts          # AppError class — operational errors with HTTP status
-    │   ├── ListerStatusStateMachine.ts # State machine — valid lister status transitions
-    │   ├── asyncHandler.ts      # Higher-order fn — wraps async handlers, auto-forwards errors
-    │   ├── jwt.ts               # generateToken() + verifyToken()
-    │   ├── response.ts          # sendSuccess() + sendError() — enforce uniform JSON shape
-    │   └── slugify.ts           # slugify() — converts blog titles to URL-safe slugs
-    │
-    └── scripts/
-        ├── seed.ts              # Seed DB with sample properties & users
-        ├── check_owners.ts      # Audit script — find properties with missing/invalid owners
-        └── reassign_owner.ts    # Data migration — reassign property owner to a valid user
+├── server.ts # 🚀 App entry point — bootstrap, middleware, routes, DB connect
+│
+├── config/
+│ └── db.ts # connectDB() helper (not used directly, logic inlined in server.ts)
+│
+├── models/
+│ ├── user.model.ts # IUser interface + UserSchema + bcrypt pre-save + comparePassword()
+│ ├── property.model.ts # IProperty interface + PropertySchema + indexes
+│ ├── blog.model.ts # IBlog interface + BlogSchema + indexes
+│ └── enquiry.model.ts # IEnquiry interface + EnquirySchema + indexes
+│
+├── repositories/
+│ ├── user.repository.ts # UserRepository class — all User DB queries
+│ ├── listing.repository.ts# PropertyRepository class — all Property DB queries + filter/pagination
+│ ├── blog.repository.ts # BlogRepository class — all Blog DB queries
+│ └── enquiry.repository.ts# EnquiryRepository class — all Enquiry DB queries
+│
+├── services/
+│ ├── user.service.ts # UserService — profile CRUD, saved properties
+│ ├── listing.service.ts # PropertyService — property CRUD with ownership checks
+│ ├── blog.service.ts # BlogService — blog CRUD with slug & readingTime generation
+│ ├── notification.service.ts # NotificationService (EventEmitter) — email event dispatch
+│ └── user.factory.ts # UserFactory — static factory for role-based user object creation
+│
+├── controllers/
+│ ├── auth.controller.ts # register, registerLister, login
+│ ├── user.controller.ts # getMe, updateMe, saveProperty, unsaveProperty, getSavedProperties
+│ ├── listing.controller.ts# getAllProperties, getPropertyById, createProperty, update, delete, getMyProperties, getListerStats
+│ ├── blog.controller.ts # getAllBlogs, getBlogBySlug, createBlog, updateBlog, deleteBlog
+│ ├── enquiry.controller.ts# createEnquiry, getMyEnquiries, markEnquiryAsRead
+│ └── admin.controller.ts # getPendingListers, getAllListers, approve/reject/suspend, getAdminStats, getAllUsers, deleteListing
+│
+├── middlewares/
+│ ├── auth.middleware.ts # protect() (JWT, stateless), restrictTo() — lightweight version
+│ ├── role.middleware.ts # protect() (DB-verified JWT), requireRole(), requireApprovedLister()
+│ ├── error.middleware.ts # Global error handler — AppError, ValidationError, CastError, Duplicate
+│ └── logger.middleware.ts # requestLogger — timestamps every request
+│
+├── routes/
+│ ├── auth.routes.ts # POST /register/user, /register/lister, /login (+ rate limit + validation)
+│ ├── user.routes.ts # GET/PUT /me, GET/POST/DELETE /me/saved/:propertyId
+│ ├── listing.routes.ts # CRUD for /listings, lister-specific dashboard & stats
+│ ├── blog.routes.ts # Public GET, lister POST/PUT/DELETE
+│ ├── enquiry.routes.ts # All protected: POST /, GET /my, PATCH /:id/read
+│ └── admin.routes.ts # All admin-only: stats, users, listers, listings
+│
+├── utils/
+│ ├── AppError.ts # AppError class — operational errors with HTTP status
+│ ├── ListerStatusStateMachine.ts # State machine — valid lister status transitions
+│ ├── asyncHandler.ts # Higher-order fn — wraps async handlers, auto-forwards errors
+│ ├── jwt.ts # generateToken() + verifyToken()
+│ ├── response.ts # sendSuccess() + sendError() — enforce uniform JSON shape
+│ └── slugify.ts # slugify() — converts blog titles to URL-safe slugs
+│
+└── scripts/
+├── seed.ts # Seed DB with sample properties & users
+├── check_owners.ts # Audit script — find properties with missing/invalid owners
+└── reassign_owner.ts # Data migration — reassign property owner to a valid user
 
 
 ## Tech Stack
