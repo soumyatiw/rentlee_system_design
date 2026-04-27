@@ -67,20 +67,11 @@ erDiagram
         datetime reviewedAt
     }
 
-    NOTIFICATION {
-        ObjectId _id PK
-        ObjectId recipientId FK
-        string type
-        string subject
-        string body
-        boolean sent
-        datetime sentAt
-    }
 
     USER ||--o{ PROPERTY : "owns (lister)"
     USER ||--o{ BLOG : "authors (admin)"
     USER ||--o{ SAVED_PROPERTY : "saves"
     PROPERTY ||--o{ SAVED_PROPERTY : "saved by"
     USER ||--o| LISTER_APPLICATION : "submits"
-    USER ||--o{ NOTIFICATION : "receives"
+
 ```
