@@ -74,8 +74,8 @@ const startServer = async (): Promise<void> => {
 
 
 
-    app.listen(Number(PORT), '127.0.0.1', () => {
-      console.log(`Rentlee server running on http://127.0.0.1:${PORT}`);
+    app.listen(Number(PORT), '0.0.0.0', () => {
+      console.log(`Rentlee server running on port ${PORT}`);
     });
   } catch (err) {
     console.error('Failed to connect to MongoDB:', err);
