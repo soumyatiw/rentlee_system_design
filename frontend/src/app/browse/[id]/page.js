@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { fetchPropertyById, saveProperty, unsaveProperty } from '@/lib/api';
+import { fetchPropertyById, saveProperty, unsaveProperty, sendEnquiry } from '@/lib/api';
 import { useAuthContext } from '@/context/AuthContext';
 import styles from './PropertyDetails.module.css';
 import { 
@@ -49,15 +49,7 @@ export default function PropertyDetails() {
     
     setSendingEnquiry(true);
     try {
-      const res = await fetch(`http://127.0.0.1:5002/api/v1/enquiries`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('rentlee_token')}`
-        },
-        body: JSON.stringify({ propertyId: id, message: enquiryMsg || "Hi, I'm interested in this property." })
-      });
-      const data = await res.json();
+      const data = await sendEnquiry(id, enquiryMsg || "Hi, I'm interested in this property.");
       if (data.success) {
         alert('Enquiry sent successfully!');
         setEnquiryMsg('');
@@ -65,7 +57,7 @@ export default function PropertyDetails() {
         alert(data.message);
       }
     } catch (err) {
-      alert('Failed to send enquiry');
+      alert(err.message || 'Failed to send enquiry');
     } finally {
       setSendingEnquiry(false);
     }
